@@ -3,7 +3,10 @@ import { useAuthStore } from "../store/auth";
 
 const navItems = [
   { to: "/", label: "Dashboard", icon: "▦" },
+  { to: "/learn", label: "Learn", icon: "✦" },
   { to: "/analyze", label: "Analyze", icon: "◎" },
+  { to: "/tech-audit", label: "Tech Audit", icon: "⚙" },
+  { to: "/ai-visibility", label: "AI Visibility", icon: "🤖" },
   { to: "/keywords", label: "Keywords", icon: "#" },
   { to: "/reports", label: "Reports", icon: "≣" },
   { to: "/crawler", label: "Crawler", icon: "⧗" },

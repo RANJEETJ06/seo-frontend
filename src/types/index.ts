@@ -406,6 +406,108 @@ export interface CompetitorReport {
   opportunities: string[];
 }
 
+// AI Visibility (GEO + AEO)
+export interface GEOSignal {
+  name: string;
+  label: string;
+  value: number;
+  score: number;
+  detail: string;
+}
+
+export interface SnippetOpportunity {
+  heading: string;
+  block_type: string;
+  text_preview: string;
+  word_count: number;
+  snippet_score: number;
+  rationale: string;
+  suggestions: string[];
+}
+
+export interface AIVisibilityResult {
+  url: string;
+  geo_score: number;
+  aeo_score: number;
+  combined_score: number;
+  geo_signals: GEOSignal[];
+  claim_count: number;
+  statistic_count: number;
+  source_links: number;
+  quotable_definitions: string[];
+  snippet_opportunities: SnippetOpportunity[];
+  question_headings: string[];
+  paa_questions: string[];
+  paa_with_answers: { question: string; answer: string }[];
+  recommendations: string[];
+  ai_enabled: boolean;
+  notes: string[];
+}
+
+export interface AIVisibilityRequest {
+  url: string;
+  focus_keyword?: string;
+  use_ai?: boolean;
+  max_paa?: number;
+}
+
+// Tech audit: Core Web Vitals + Schema
+export interface WebVitalsMetric {
+  key: string;
+  label: string;
+  value: number;
+  display: string;
+  unit: string;
+  rating: "good" | "needs-improvement" | "poor" | "unknown";
+  good_max?: number | null;
+  poor_min?: number | null;
+}
+
+export interface WebVitalsResult {
+  url: string;
+  source: "psi" | "heuristic";
+  strategy: "mobile" | "desktop";
+  performance_score: number;
+  field_data: boolean;
+  metrics: WebVitalsMetric[];
+  opportunities: string[];
+  notes: string[];
+}
+
+export interface SchemaBlock {
+  types: string[];
+  valid_json: boolean;
+  errors: string[];
+  warnings: string[];
+}
+
+export interface SchemaAuditResult {
+  url: string;
+  detected_types: string[];
+  jsonld_blocks: number;
+  microdata_detected: boolean;
+  score: number;
+  blocks: SchemaBlock[];
+  errors: string[];
+  warnings: string[];
+  recommendations: string[];
+  generated_for?: string | null;
+  generated_jsonld?: string | null;
+}
+
+export interface TechAuditRequest {
+  url: string;
+  strategy?: "mobile" | "desktop";
+}
+
+export interface TechAuditResponse {
+  url: string;
+  combined_score: number;
+  web_vitals: WebVitalsResult;
+  schema_audit: SchemaAuditResult;
+  summary: string;
+}
+
 // Background tasks
 export type TaskState =
   | "PENDING"

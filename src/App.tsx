@@ -11,6 +11,9 @@ import Reports from "./pages/Reports";
 import Crawler from "./pages/Crawler";
 import Competitor from "./pages/Competitor";
 import AITools from "./pages/AITools";
+import TechAudit from "./pages/TechAudit";
+import AIVisibility from "./pages/AIVisibility";
+import Learn from "./pages/Learn";
 import Settings from "./pages/Settings";
 
 function App() {
@@ -33,6 +36,9 @@ function App() {
             <Route path="/crawler" element={<Crawler />} />
             <Route path="/competitor" element={<Competitor />} />
             <Route path="/ai-tools" element={<AITools />} />
+            <Route path="/tech-audit" element={<TechAudit />} />
+            <Route path="/ai-visibility" element={<AIVisibility />} />
+            <Route path="/learn" element={<Learn />} />
             <Route path="/settings" element={<Settings />} />
           </Route>
         </Route>

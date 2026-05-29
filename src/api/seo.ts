@@ -7,6 +7,10 @@ import type {
   CompetitorReport,
   TaskSubmitResponse,
   TaskStatusResponse,
+  TechAuditRequest,
+  TechAuditResponse,
+  AIVisibilityRequest,
+  AIVisibilityResult,
 } from "../types";
 
 export const seoApi = {
@@ -58,6 +62,40 @@ export const seoApi = {
   async competitorSync(payload: CompetitorRequest): Promise<CompetitorReport> {
     const { data } = await apiClient.post<CompetitorReport>(
       "/competitor/sync",
+      payload
+    );
+    return data;
+  },
+  /** Core Web Vitals + structured-data audit (synchronous, heuristic-only). */
+  async techAudit(payload: TechAuditRequest): Promise<TechAuditResponse> {
+    const { data } = await apiClient.post<TechAuditResponse>(
+      "/tech-audit/sync",
+      payload
+    );
+    return data;
+  },
+  /** Enqueue tech audit on Celery (recommended when PSI is enabled). */
+  async submitTechAudit(payload: TechAuditRequest): Promise<TaskSubmitResponse> {
+    const { data } = await apiClient.post<TaskSubmitResponse>(
+      "/tech-audit",
+      payload
+    );
+    return data;
+  },
+  /** AI Visibility (GEO + AEO + PAA) — synchronous. */
+  async aiVisibility(payload: AIVisibilityRequest): Promise<AIVisibilityResult> {
+    const { data } = await apiClient.post<AIVisibilityResult>(
+      "/ai-visibility/sync",
+      payload
+    );
+    return data;
+  },
+  /** Enqueue AI Visibility on Celery (recommended when Gemini is enabled). */
+  async submitAIVisibility(
+    payload: AIVisibilityRequest
+  ): Promise<TaskSubmitResponse> {
+    const { data } = await apiClient.post<TaskSubmitResponse>(
+      "/ai-visibility",
       payload
     );
     return data;
