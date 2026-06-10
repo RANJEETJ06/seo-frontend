@@ -45,7 +45,7 @@ const Settings = () => {
         </dl>
       </Card>
 
-      <Card title="API">
+      {/* <Card title="API">
         <dl className="space-y-3 text-sm">
           <Row
             label="Base URL"
@@ -56,7 +56,7 @@ const Settings = () => {
           />
           <Row label="Auth" value="JWT bearer token (localStorage)" />
         </dl>
-      </Card>
+      </Card> */}
     </div>
   );
 };
