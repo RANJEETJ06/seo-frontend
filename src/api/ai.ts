@@ -2,6 +2,8 @@ import { apiClient } from "./client";
 import type {
   AIRecommendationRequest,
   AIRecommendationResponse,
+  AIVisibilityRequest,
+  AIVisibilityResult,
   BacklinkAgentRequest,
   BacklinkAgentResponse,
   InternalExportRequest,
@@ -19,6 +21,24 @@ import type {
 } from "../types";
 
 export const aiApi = {
+  async aiVisibility(
+    payload: AIVisibilityRequest
+  ): Promise<AIVisibilityResult> {
+    const { data } = await apiClient.post<AIVisibilityResult>(
+      "/ai-visibility/sync",
+      payload
+    );
+    return data;
+  },
+  async submitAIVisibility(
+    payload: AIVisibilityRequest
+  ): Promise<{ task_id: string; status: string }> {
+    const { data } = await apiClient.post<{ task_id: string; status: string }>(
+      "/ai-visibility",
+      payload
+    );
+    return data;
+  },
   async recommend(
     payload: AIRecommendationRequest
   ): Promise<AIRecommendationResponse> {
