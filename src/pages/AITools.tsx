@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { aiApi, apiErrorMessage } from "../api";
 import Card from "../components/Card";
@@ -1235,21 +1235,32 @@ const QueueTab = () => {
   const [kind, setKind] = useState<"outreach" | "directory" | "guestpost">(
     "outreach"
   );
+  const [scope, setScope] = useState<
+    "review" | "all" | "approved" | "queued" | "drafted" | "discovered" | "sent" | "replied" | "skipped"
+  >("review");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<QueueListResponse | null>(null);
 
-  const load = async (k: typeof kind) => {
+  const load = async (
+    k: typeof kind,
+    s: typeof scope = scope
+  ) => {
     setLoading(true);
     setError(null);
     try {
-      setData(await aiApi.queueList(k));
+      setData(await aiApi.queueList(k, s === "all" ? undefined : s));
     } catch (err) {
       setError(apiErrorMessage(err, "Could not load queue"));
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    void load(kind, scope);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [kind, scope]);
 
   const advance = async (id: number, status: string) => {
     try {
@@ -1262,16 +1273,43 @@ const QueueTab = () => {
 
   return (
     <Card
-      title="Backlink queue"
+      title={scope === "review" ? "Backlink approval queue" : "Backlink queue"}
       action={
+        <div className="flex flex-wrap gap-1">
+          {(
+            [
+              { id: "review", label: "Needs review" },
+              { id: "all", label: "All" },
+              { id: "approved", label: "Approved" },
+              { id: "queued", label: "Queued" },
+              { id: "drafted", label: "Drafted" },
+              { id: "discovered", label: "Discovered" },
+              { id: "sent", label: "Sent" },
+              { id: "replied", label: "Replied" },
+              { id: "skipped", label: "Skipped" },
+            ] as const
+          ).map((s) => (
+            <button
+              key={s.id}
+              onClick={() => setScope(s.id)}
+              className={`rounded px-2 py-1 text-xs font-medium ${
+                scope === s.id
+                  ? "bg-indigo-600 text-white"
+                  : "text-slate-600 hover:bg-slate-100"
+              }`}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+      }
+    >
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex gap-1">
           {(["outreach", "directory", "guestpost"] as const).map((k) => (
             <button
               key={k}
-              onClick={() => {
-                setKind(k);
-                load(k);
-              }}
+              onClick={() => setKind(k)}
               className={`rounded px-2 py-1 text-xs font-medium ${
                 kind === k
                   ? "bg-indigo-600 text-white"
@@ -1282,14 +1320,13 @@ const QueueTab = () => {
             </button>
           ))}
         </div>
-      }
-    >
-      <button
-        onClick={() => load(kind)}
-        className="text-xs font-medium text-indigo-600 hover:underline"
-      >
-        {loading ? "Loading…" : "Refresh"}
-      </button>
+        <button
+          onClick={() => load(kind, scope)}
+          className="text-xs font-medium text-indigo-600 hover:underline"
+        >
+          {loading ? "Loading…" : "Refresh"}
+        </button>
+      </div>
       {error && (
         <div className="mt-2 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
           {error}
@@ -1318,6 +1355,15 @@ const QueueTab = () => {
                 </span>
                 <span className="flex items-center gap-2">
                   <Badge tone="info">{String(row.status)}</Badge>
+                  {String(row.status) !== "approved" && (
+                    <button
+                      type="button"
+                      onClick={() => advance(id, "approved")}
+                      className="rounded border border-emerald-200 px-2 py-1 text-xs text-emerald-700 hover:bg-emerald-50"
+                    >
+                      Approve
+                    </button>
+                  )}
                   <select
                     defaultValue=""
                     onChange={(e) =>
@@ -1326,6 +1372,7 @@ const QueueTab = () => {
                     className="rounded border border-slate-200 px-1.5 py-1 text-xs"
                   >
                     <option value="">set status…</option>
+                    <option value="approved">approved</option>
                     {["queued", "sent", "replied", "skipped"].map((s) => (
                       <option key={s} value={s}>
                         {s}
