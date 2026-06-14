@@ -13,13 +13,13 @@ const Crawler = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Crawler</h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <h1 className="text-2xl font-semibold text-ink">Crawler</h1>
+        <p className="mt-1 text-sm text-ink-faint">
           Crawl a site, inspect its sitemap, and read its robots.txt.
         </p>
       </div>
 
-      <div className="inline-flex rounded-md border border-slate-200 bg-white p-1">
+      <div className="inline-flex rounded-md border border-line-2 bg-panel p-1">
         {(
           [
             { id: "crawl", label: "Crawl" },
@@ -32,8 +32,8 @@ const Crawler = () => {
             onClick={() => setTab(t.id)}
             className={`rounded px-4 py-1.5 text-xs font-medium transition ${
               tab === t.id
-                ? "bg-indigo-600 text-white"
-                : "text-slate-600 hover:bg-slate-100"
+                ? "bg-signal text-[#353941]"
+                : "text-ink-dim hover:bg-white/[0.06]"
             }`}
           >
             {t.label}
@@ -100,12 +100,12 @@ const CrawlPanel = () => {
             />
           </Field>
           <div className="flex items-end">
-            <label className="flex items-center gap-2 text-sm text-slate-600">
+            <label className="flex items-center gap-2 text-sm text-ink-dim">
               <input
                 type="checkbox"
                 checked={sameDomainOnly}
                 onChange={(e) => setSameDomainOnly(e.target.checked)}
-                className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                className="rounded border-line-2 text-signal focus:ring-signal"
               />
               Same domain only
             </label>
@@ -116,7 +116,7 @@ const CrawlPanel = () => {
             </Button>
           </div>
           {error && (
-            <div className="md:col-span-3 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="md:col-span-3 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {error}
             </div>
           )}
@@ -130,7 +130,7 @@ const CrawlPanel = () => {
         >
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="text-left text-xs uppercase tracking-wide text-slate-500">
+              <thead className="text-left text-xs uppercase tracking-wide text-ink-faint">
                 <tr>
                   <th className="px-2 py-2">URL</th>
                   <th className="px-2 py-2">Status</th>
@@ -141,13 +141,13 @@ const CrawlPanel = () => {
               </thead>
               <tbody>
                 {result.pages.map((p, i) => (
-                  <tr key={i} className="border-t border-slate-100">
-                    <td className="max-w-md truncate px-2 py-2 text-slate-700">
+                  <tr key={i} className="border-t border-line">
+                    <td className="max-w-md truncate px-2 py-2 text-ink-dim">
                       <a
                         href={p.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="hover:text-indigo-600 hover:underline"
+                        className="hover:text-signal hover:underline"
                       >
                         {p.url}
                       </a>
@@ -165,13 +165,13 @@ const CrawlPanel = () => {
                         {p.status_code}
                       </Badge>
                     </td>
-                    <td className="max-w-xs truncate px-2 py-2 text-slate-600">
+                    <td className="max-w-xs truncate px-2 py-2 text-ink-dim">
                       {p.title ?? "—"}
                     </td>
-                    <td className="px-2 py-2 text-slate-600">
+                    <td className="px-2 py-2 text-ink-dim">
                       {p.word_count}
                     </td>
-                    <td className="px-2 py-2 text-xs text-slate-500">
+                    <td className="px-2 py-2 text-xs text-ink-faint">
                       {new Date(p.fetched_at).toLocaleTimeString()}
                     </td>
                   </tr>
@@ -241,7 +241,7 @@ const SitemapPanel = () => {
             </Button>
           </div>
           {error && (
-            <div className="md:col-span-3 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="md:col-span-3 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {error}
             </div>
           )}
@@ -254,13 +254,13 @@ const SitemapPanel = () => {
             {result.urls.map((u, i) => (
               <li
                 key={i}
-                className="truncate rounded px-2 py-1 text-slate-700 hover:bg-slate-50"
+                className="truncate rounded px-2 py-1 text-ink-dim hover:bg-white/[0.04]"
               >
                 <a
                   href={u}
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-indigo-600 hover:underline"
+                  className="hover:text-signal hover:underline"
                 >
                   {u}
                 </a>
@@ -318,7 +318,7 @@ const RobotsPanel = () => {
           </Button>
         </form>
         {error && (
-          <div className="mt-3 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+          <div className="mt-3 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
             {error}
           </div>
         )}
@@ -334,11 +334,11 @@ const RobotsPanel = () => {
           }
         >
           {result.content ? (
-            <pre className="overflow-x-auto rounded-md bg-slate-900 p-4 text-xs text-slate-100">
+            <pre className="overflow-x-auto rounded-md bg-bg-soft p-4 text-xs text-ink">
               {result.content}
             </pre>
           ) : (
-            <div className="text-sm text-slate-500">No content.</div>
+            <div className="text-sm text-ink-faint">No content.</div>
           )}
         </Card>
       )}

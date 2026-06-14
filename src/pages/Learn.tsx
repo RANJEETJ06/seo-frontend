@@ -12,10 +12,10 @@ const Learn = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">
+        <h1 className="text-2xl font-semibold text-ink">
           Learn: SEO, GEO & AEO
         </h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-ink-faint">
           A quick primer on the three optimisation disciplines this platform
           covers, and a step-by-step path to your first audit.
         </p>
@@ -54,7 +54,7 @@ const Learn = () => {
 
       {/* Why all three? */}
       <Card title="Why care about all three?">
-        <div className="space-y-3 text-sm text-slate-700">
+        <div className="space-y-3 text-sm text-ink-dim">
           <p>
             Five years ago SEO was the only game. Today, an increasing share of
             search traffic never reaches a results page — it ends inside an AI
@@ -73,7 +73,7 @@ const Learn = () => {
       <Card title="At a glance">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-slate-200 text-xs uppercase text-slate-500">
+            <thead className="border-b border-line-2 text-xs uppercase text-ink-faint">
               <tr>
                 <th className="px-3 py-2">Aspect</th>
                 <th className="px-3 py-2">SEO</th>
@@ -81,7 +81,7 @@ const Learn = () => {
                 <th className="px-3 py-2">GEO</th>
               </tr>
             </thead>
-            <tbody className="text-slate-700">
+            <tbody className="text-ink-dim">
               <CompareRow
                 aspect="Target surface"
                 seo="Organic results"
@@ -222,21 +222,21 @@ const Learn = () => {
       </Card>
 
       {/* CTA */}
-      <div className="rounded-lg border border-indigo-200 bg-gradient-to-br from-indigo-50 to-white p-6">
-        <h3 className="text-lg font-semibold text-slate-900">Ready to start?</h3>
-        <p className="mt-1 text-sm text-slate-600">
+      <div className="rounded-lg border border-[rgba(202,249,76,0.25)] bg-gradient-to-br from-signal-soft to-white p-6">
+        <h3 className="text-lg font-semibold text-ink">Ready to start?</h3>
+        <p className="mt-1 text-sm text-ink-dim">
           Run your first audit now — it takes under a minute and works with no API keys.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           <Link
             to="/analyze"
-            className="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+            className="inline-flex items-center rounded-md bg-signal px-4 py-2 text-sm font-medium text-[#0a0b0d] hover:bg-signal-press"
           >
             Analyze a URL →
           </Link>
           <Link
             to="/tech-audit"
-            className="inline-flex items-center rounded-md border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="inline-flex items-center rounded-md border border-line-2 bg-panel px-4 py-2 text-sm font-medium text-ink-dim hover:bg-white/[0.04]"
           >
             Run Technical Audit →
           </Link>
@@ -267,24 +267,24 @@ const ConceptCard = ({
   how: string;
   win: string;
 }) => (
-  <div className="flex flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+  <div className="flex flex-col rounded-lg border border-line-2 bg-panel p-5 shadow-sm">
     <div className="flex items-center gap-2">
       <Badge tone={tone}>{badge}</Badge>
-      <span className="text-xs text-slate-500">{subtitle}</span>
+      <span className="text-xs text-ink-faint">{subtitle}</span>
     </div>
-    <h3 className="mt-3 text-base font-semibold text-slate-900">{title}</h3>
+    <h3 className="mt-3 text-base font-semibold text-ink">{title}</h3>
     <dl className="mt-3 space-y-2 text-sm">
       <div>
-        <dt className="text-xs font-medium text-slate-500">Where</dt>
-        <dd className="text-slate-700">{who}</dd>
+        <dt className="text-xs font-medium text-ink-faint">Where</dt>
+        <dd className="text-ink-dim">{who}</dd>
       </div>
       <div>
-        <dt className="text-xs font-medium text-slate-500">How you win</dt>
-        <dd className="text-slate-700">{how}</dd>
+        <dt className="text-xs font-medium text-ink-faint">How you win</dt>
+        <dd className="text-ink-dim">{how}</dd>
       </div>
       <div>
-        <dt className="text-xs font-medium text-slate-500">The outcome</dt>
-        <dd className="text-slate-700">{win}</dd>
+        <dt className="text-xs font-medium text-ink-faint">The outcome</dt>
+        <dd className="text-ink-dim">{win}</dd>
       </div>
     </dl>
   </div>
@@ -301,8 +301,8 @@ const CompareRow = ({
   aeo: string;
   geo: string;
 }) => (
-  <tr className="border-b border-slate-100 last:border-0">
-    <td className="px-3 py-2 font-medium text-slate-600">{aspect}</td>
+  <tr className="border-b border-line last:border-0">
+    <td className="px-3 py-2 font-medium text-ink-dim">{aspect}</td>
     <td className="px-3 py-2">{seo}</td>
     <td className="px-3 py-2">{aeo}</td>
     <td className="px-3 py-2">{geo}</td>
@@ -321,15 +321,15 @@ const Step = ({
   link: { to: string; label: string };
 }) => (
   <li className="flex gap-4">
-    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-semibold text-indigo-700">
+    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-signal-soft text-xs font-semibold text-signal">
       {n}
     </span>
     <div className="flex-1">
-      <p className="font-medium text-slate-900">{title}</p>
-      <p className="mt-1 text-slate-600">{body}</p>
+      <p className="font-medium text-ink">{title}</p>
+      <p className="mt-1 text-ink-dim">{body}</p>
       <Link
         to={link.to}
-        className="mt-1 inline-block text-xs font-medium text-indigo-600 hover:text-indigo-700"
+        className="mt-1 inline-block text-xs font-medium text-signal hover:text-signal"
       >
         {link.label} →
       </Link>
@@ -346,7 +346,7 @@ const FeatureColumn = ({
   tone: Tone;
   items: { name: string; to: string }[];
 }) => (
-  <div className="rounded-md border border-slate-200 p-4">
+  <div className="rounded-md border border-line-2 p-4">
     <div className="mb-3">
       <Badge tone={tone}>{label}</Badge>
     </div>
@@ -355,10 +355,10 @@ const FeatureColumn = ({
         <li key={`${label}-${it.name}`}>
           <Link
             to={it.to}
-            className="flex items-center justify-between rounded px-2 py-1 text-slate-700 hover:bg-slate-50 hover:text-indigo-700"
+            className="flex items-center justify-between rounded px-2 py-1 text-ink-dim hover:bg-white/[0.04] hover:text-signal"
           >
             <span>{it.name}</span>
-            <span className="text-slate-400">→</span>
+            <span className="text-ink-faint">→</span>
           </Link>
         </li>
       ))}
@@ -367,12 +367,12 @@ const FeatureColumn = ({
 );
 
 const FAQ = ({ q, a }: { q: string; a: string }) => (
-  <details className="group rounded-md border border-slate-200 p-3 open:bg-slate-50">
-    <summary className="cursor-pointer list-none text-sm font-medium text-slate-800 group-open:text-indigo-700">
-      <span className="mr-2 text-slate-400 group-open:text-indigo-500">›</span>
+  <details className="group rounded-md border border-line-2 p-3 open:bg-panel-2">
+    <summary className="cursor-pointer list-none text-sm font-medium text-ink group-open:text-signal">
+      <span className="mr-2 text-ink-faint group-open:text-signal">›</span>
       {q}
     </summary>
-    <p className="mt-2 pl-4 text-sm text-slate-600">{a}</p>
+    <p className="mt-2 pl-4 text-sm text-ink-dim">{a}</p>
   </details>
 );
 

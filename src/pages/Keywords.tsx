@@ -19,13 +19,13 @@ const Keywords = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Keywords</h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <h1 className="text-2xl font-semibold text-ink">Keywords</h1>
+        <p className="mt-1 text-sm text-ink-faint">
           Extract and cluster keywords, or browse keywords saved per project.
         </p>
       </div>
 
-      <div className="inline-flex rounded-md border border-slate-200 bg-white p-1">
+      <div className="inline-flex rounded-md border border-line-2 bg-panel p-1">
         {(
           [
             { id: "extract", label: "Extract & cluster" },
@@ -37,8 +37,8 @@ const Keywords = () => {
             onClick={() => setTab(t.id)}
             className={`rounded px-4 py-1.5 text-xs font-medium transition ${
               tab === t.id
-                ? "bg-indigo-600 text-white"
-                : "text-slate-600 hover:bg-slate-100"
+                ? "bg-signal text-[#353940]"
+                : "text-ink-dim hover:bg-white/[0.06]"
             }`}
           >
             {t.label}
@@ -107,15 +107,15 @@ const ExtractPanel = () => {
   return (
     <div className="space-y-6">
       <Card>
-        <div className="mb-4 inline-flex rounded-md border border-slate-200 p-1">
+        <div className="mb-4 inline-flex rounded-md border border-line-2 p-1">
           {(["url", "text"] as SourceMode[]).map((m) => (
             <button
               key={m}
               onClick={() => setMode(m)}
               className={`rounded px-3 py-1 text-xs font-medium transition ${
                 mode === m
-                  ? "bg-indigo-600 text-white"
-                  : "text-slate-600 hover:bg-slate-100"
+                  ? "bg-signal text-[#272a2f]"
+                  : "text-ink-dim hover:bg-white/[0.06]"
               }`}
             >
               {m === "url" ? "From URL" : "From text"}
@@ -173,7 +173,7 @@ const ExtractPanel = () => {
             </Button>
           </div>
           {error && (
-            <div className="md:col-span-3 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="md:col-span-3 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {error}
             </div>
           )}
@@ -193,7 +193,7 @@ const ExtractPanel = () => {
         >
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="text-left text-xs uppercase tracking-wide text-slate-500">
+              <thead className="text-left text-xs uppercase tracking-wide text-ink-faint">
                 <tr>
                   <th className="px-2 py-2">Term</th>
                   <th className="px-2 py-2">Frequency</th>
@@ -203,15 +203,15 @@ const ExtractPanel = () => {
               </thead>
               <tbody>
                 {keywords.map((k, i) => (
-                  <tr key={i} className="border-t border-slate-100">
-                    <td className="px-2 py-2 font-medium text-slate-700">
+                  <tr key={i} className="border-t border-line">
+                    <td className="px-2 py-2 font-medium text-ink-dim">
                       {k.term}
                     </td>
-                    <td className="px-2 py-2 text-slate-600">{k.frequency}</td>
-                    <td className="px-2 py-2 text-slate-600">
+                    <td className="px-2 py-2 text-ink-dim">{k.frequency}</td>
+                    <td className="px-2 py-2 text-ink-dim">
                       {(k.density * 100).toFixed(2)}%
                     </td>
-                    <td className="px-2 py-2 text-slate-600">
+                    <td className="px-2 py-2 text-ink-dim">
                       {k.relevance_score.toFixed(2)}
                     </td>
                   </tr>
@@ -220,7 +220,7 @@ const ExtractPanel = () => {
             </table>
           </div>
 
-          <div className="mt-6 flex items-end gap-3 border-t border-slate-100 pt-4">
+          <div className="mt-6 flex items-end gap-3 border-t border-line pt-4">
             <Field label="Number of clusters">
               <TextInput
                 type="number"
@@ -248,10 +248,10 @@ const ExtractPanel = () => {
             {clusters.map((c, i) => (
               <div
                 key={i}
-                className="rounded-lg border border-slate-200 p-4"
+                className="rounded-lg border border-line-2 p-4"
               >
                 <div className="mb-2 flex items-center justify-between">
-                  <div className="text-sm font-semibold text-slate-800">
+                  <div className="text-sm font-semibold text-ink">
                     {c.label}
                   </div>
                   {c.centroid_term && (
@@ -262,7 +262,7 @@ const ExtractPanel = () => {
                   {c.members.map((m, j) => (
                     <span
                       key={j}
-                      className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700"
+                      className="rounded-full bg-panel-2 px-2 py-0.5 text-xs text-ink-dim"
                     >
                       {m}
                     </span>
@@ -319,7 +319,7 @@ const ProjectKeywordsPanel = () => {
             <select
               value={projectId}
               onChange={(e) => setProjectId(e.target.value)}
-              className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+              className="w-full rounded-md border border-line-2 bg-panel px-3 py-2 text-sm focus:border-signal focus:outline-none focus:ring-2 focus:ring-signal/20"
             >
               <option value="">Select a project…</option>
               {projects.map((p) => (
@@ -334,7 +334,7 @@ const ProjectKeywordsPanel = () => {
 
       {loading && (
         <Card>
-          <div className="py-8 text-center text-sm text-slate-500">
+          <div className="py-8 text-center text-sm text-ink-faint">
             Loading keywords…
           </div>
         </Card>
@@ -342,7 +342,7 @@ const ProjectKeywordsPanel = () => {
 
       {error && (
         <Card>
-          <div className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+          <div className="rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
             {error}
           </div>
         </Card>
@@ -350,7 +350,7 @@ const ProjectKeywordsPanel = () => {
 
       {projectId && !loading && !error && keywords.length === 0 && (
         <Card>
-          <div className="py-12 text-center text-sm text-slate-500">
+          <div className="py-12 text-center text-sm text-ink-faint">
             No keywords saved for this project yet.
           </div>
         </Card>
@@ -367,7 +367,7 @@ const ProjectKeywordsPanel = () => {
         >
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="text-left text-xs uppercase tracking-wide text-slate-500">
+              <thead className="text-left text-xs uppercase tracking-wide text-ink-faint">
                 <tr>
                   <th className="px-2 py-2">Term</th>
                   <th className="px-2 py-2">Cluster</th>
@@ -380,30 +380,30 @@ const ProjectKeywordsPanel = () => {
               </thead>
               <tbody>
                 {keywords.map((k) => (
-                  <tr key={k.id} className="border-t border-slate-100">
-                    <td className="px-2 py-2 font-medium text-slate-700">
+                  <tr key={k.id} className="border-t border-line">
+                    <td className="px-2 py-2 font-medium text-ink-dim">
                       {k.term}
                     </td>
                     <td className="px-2 py-2">
                       {k.cluster_label ? (
                         <Badge tone="neutral">{k.cluster_label}</Badge>
                       ) : (
-                        <span className="text-slate-400">—</span>
+                        <span className="text-ink-faint">—</span>
                       )}
                     </td>
-                    <td className="px-2 py-2 text-slate-600">
+                    <td className="px-2 py-2 text-ink-dim">
                       {k.frequency}
                     </td>
-                    <td className="px-2 py-2 text-slate-600">
+                    <td className="px-2 py-2 text-ink-dim">
                       {(k.density * 100).toFixed(2)}%
                     </td>
-                    <td className="px-2 py-2 text-slate-600">
+                    <td className="px-2 py-2 text-ink-dim">
                       {k.relevance_score.toFixed(2)}
                     </td>
                     <td className="px-2 py-2">
                       <Badge tone="neutral">{k.source}</Badge>
                     </td>
-                    <td className="px-2 py-2 text-xs text-slate-500">
+                    <td className="px-2 py-2 text-xs text-ink-faint">
                       {new Date(k.created_at).toLocaleDateString()}
                     </td>
                   </tr>

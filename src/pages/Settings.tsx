@@ -12,8 +12,8 @@ const Settings = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Settings</h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <h1 className="text-2xl font-semibold text-ink">Settings</h1>
+        <p className="mt-1 text-sm text-ink-faint">
           Account, integrations, and outreach configuration.
         </p>
       </div>
@@ -58,9 +58,9 @@ const Row = ({
   label: string;
   value: ReactNode;
 }) => (
-  <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-2 last:border-b-0 last:pb-0">
-    <dt className="text-xs font-medium text-slate-500">{label}</dt>
-    <dd className="text-slate-800">{value}</dd>
+  <div className="flex items-center justify-between gap-3 border-b border-line pb-2 last:border-b-0 last:pb-0">
+    <dt className="text-xs font-medium text-ink-faint">{label}</dt>
+    <dd className="text-ink">{value}</dd>
   </div>
 );
 

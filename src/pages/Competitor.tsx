@@ -58,10 +58,10 @@ const Competitor = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">
+        <h1 className="text-2xl font-semibold text-ink">
           Competitor Analysis
         </h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-ink-faint">
           Compare your page against up to 10 competitors and discover gaps.
         </p>
       </div>
@@ -89,14 +89,14 @@ const Competitor = () => {
 
           <div>
             <div className="mb-2 flex items-center justify-between">
-              <span className="text-xs font-medium text-slate-700">
+              <span className="text-xs font-medium text-ink-dim">
                 Competitor URLs ({competitors.length}/10)
               </span>
               <button
                 type="button"
                 onClick={addCompetitor}
                 disabled={competitors.length >= 10}
-                className="text-xs font-medium text-indigo-600 hover:underline disabled:opacity-40"
+                className="text-xs font-medium text-signal hover:underline disabled:opacity-40"
               >
                 + Add another
               </button>
@@ -115,7 +115,7 @@ const Competitor = () => {
                     type="button"
                     onClick={() => removeCompetitor(i)}
                     disabled={competitors.length === 1}
-                    className="rounded-md px-3 text-sm text-rose-600 hover:bg-rose-50 disabled:opacity-40"
+                    className="rounded-md px-3 text-sm text-danger hover:bg-[rgba(251,113,133,0.1)] disabled:opacity-40"
                   >
                     Remove
                   </button>
@@ -144,7 +144,7 @@ const Competitor = () => {
           </div>
 
           {error && (
-            <div className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {error}
             </div>
           )}
@@ -157,19 +157,19 @@ const Competitor = () => {
           action={!poll.error ? <Badge tone="info">{poll.status}</Badge> : null}
         >
           {poll.error ? (
-            <div className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {poll.error}
             </div>
           ) : (
             <div className="flex items-center gap-3">
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-indigo-500 border-t-transparent" />
-              <div className="text-sm text-slate-600">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-signal border-t-transparent" />
+              <div className="text-sm text-ink-dim">
                 {(poll.progress?.stage as string | undefined) ??
                   "Waiting for worker…"}
               </div>
             </div>
           )}
-          <div className="mt-2 text-xs text-slate-400">
+          <div className="mt-2 text-xs text-ink-faint">
             Task ID: {poll.taskId}
           </div>
         </Card>
@@ -195,7 +195,7 @@ const ReportView = ({ report }: { report: CompetitorReport }) => {
       <Card title="Comparison">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="text-left text-xs uppercase tracking-wide text-slate-500">
+            <thead className="text-left text-xs uppercase tracking-wide text-ink-faint">
               <tr>
                 <th className="px-2 py-2">Site</th>
                 <th className="px-2 py-2">Overall</th>
@@ -211,14 +211,14 @@ const ReportView = ({ report }: { report: CompetitorReport }) => {
               {allRows.map((r, i) => (
                 <tr
                   key={i}
-                  className={`border-t border-slate-100 ${
-                    r.isTarget ? "bg-indigo-50/40" : ""
+                  className={`border-t border-line ${
+                    r.isTarget ? "bg-signal-soft/40" : ""
                   }`}
                 >
                   <td className="max-w-xs truncate px-2 py-2">
                     <div className="flex items-center gap-2">
                       {r.isTarget && <Badge tone="info">You</Badge>}
-                      <span className="truncate font-medium text-slate-700">
+                      <span className="truncate font-medium text-ink-dim">
                         {r.label}
                       </span>
                     </div>
@@ -229,7 +229,7 @@ const ReportView = ({ report }: { report: CompetitorReport }) => {
                   <Cell value={r.site.heading_score} />
                   <Cell value={r.site.content_score} />
                   <Cell value={r.site.technical_score} />
-                  <td className="px-2 py-2 text-slate-600">
+                  <td className="px-2 py-2 text-ink-dim">
                     {r.site.word_count}
                   </td>
                 </tr>
@@ -260,7 +260,7 @@ const ReportView = ({ report }: { report: CompetitorReport }) => {
       <div className="grid gap-6 lg:grid-cols-2">
         {report.gaps.length > 0 && (
           <Card title={`Gaps (${report.gaps.length})`}>
-            <ul className="space-y-2 text-sm text-rose-700">
+            <ul className="space-y-2 text-sm text-danger">
               {report.gaps.map((g, i) => (
                 <li key={i} className="flex gap-2">
                   <span>⚠</span>
@@ -272,7 +272,7 @@ const ReportView = ({ report }: { report: CompetitorReport }) => {
         )}
         {report.opportunities.length > 0 && (
           <Card title={`Opportunities (${report.opportunities.length})`}>
-            <ul className="space-y-2 text-sm text-emerald-700">
+            <ul className="space-y-2 text-sm text-success">
               {report.opportunities.map((o, i) => (
                 <li key={i} className="flex gap-2">
                   <span>→</span>
@@ -288,9 +288,9 @@ const ReportView = ({ report }: { report: CompetitorReport }) => {
 };
 
 const Cell = ({ value, bold }: { value: number; bold?: boolean }) => {
-  let tone = "text-rose-600";
-  if (value >= 80) tone = "text-emerald-600";
-  else if (value >= 60) tone = "text-amber-600";
+  let tone = "text-danger";
+  if (value >= 80) tone = "text-success";
+  else if (value >= 60) tone = "text-warn";
   else if (value >= 40) tone = "text-orange-600";
   return (
     <td className={`px-2 py-2 ${tone} ${bold ? "font-semibold" : ""}`}>

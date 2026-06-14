@@ -5,10 +5,10 @@ interface ScoreGaugeProps {
 }
 
 function colorFor(score: number) {
-  if (score >= 80) return "text-emerald-600 stroke-emerald-500";
-  if (score >= 60) return "text-amber-600 stroke-amber-500";
-  if (score >= 40) return "text-orange-600 stroke-orange-500";
-  return "text-rose-600 stroke-rose-500";
+  if (score >= 80) return "text-signal stroke-signal";
+  if (score >= 60) return "text-warn stroke-warn";
+  if (score >= 40) return "text-[#fb923c] stroke-[#fb923c]";
+  return "text-danger stroke-danger";
 }
 
 const ScoreGauge = ({ score, label, size = "md" }: ScoreGaugeProps) => {
@@ -19,7 +19,8 @@ const ScoreGauge = ({ score, label, size = "md" }: ScoreGaugeProps) => {
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - clamped / 100);
   const color = colorFor(clamped);
-  const fontSize = size === "sm" ? "text-sm" : size === "lg" ? "text-3xl" : "text-xl";
+  const fontSize =
+    size === "sm" ? "text-base" : size === "lg" ? "text-4xl" : "text-2xl";
 
   return (
     <div className="flex flex-col items-center">
@@ -30,7 +31,7 @@ const ScoreGauge = ({ score, label, size = "md" }: ScoreGaugeProps) => {
             cy={dim / 2}
             r={radius}
             strokeWidth={stroke}
-            className="stroke-slate-100"
+            className="stroke-white/[0.07]"
             fill="none"
           />
           <circle
@@ -43,17 +44,22 @@ const ScoreGauge = ({ score, label, size = "md" }: ScoreGaugeProps) => {
             strokeDasharray={circumference}
             strokeDashoffset={offset}
             fill="none"
-            style={{ transition: "stroke-dashoffset 0.5s ease" }}
+            style={{
+              transition: "stroke-dashoffset 0.7s cubic-bezier(0.2,0.7,0.2,1)",
+              filter: "drop-shadow(0 0 6px currentColor)",
+            }}
           />
         </svg>
         <div
-          className={`absolute inset-0 flex items-center justify-center font-semibold ${fontSize} ${color}`}
+          className={`absolute inset-0 flex items-center justify-center font-display font-semibold tabular-nums ${fontSize} ${color}`}
         >
           {Math.round(clamped)}
         </div>
       </div>
       {label && (
-        <div className="mt-2 text-xs font-medium text-slate-600">{label}</div>
+        <div className="mt-2.5 text-[0.7rem] font-medium uppercase tracking-[0.14em] text-ink-dim font-mono">
+          {label}
+        </div>
       )}
     </div>
   );

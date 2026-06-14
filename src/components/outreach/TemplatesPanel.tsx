@@ -108,13 +108,13 @@ const TemplatesPanel = () => {
       }
     >
       {error && (
-        <div className="mb-3 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+        <div className="mb-3 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
           {error}
         </div>
       )}
 
       {showForm && (
-        <form onSubmit={handleSubmit} className="mb-6 space-y-4 rounded-md border border-slate-200 p-4">
+        <form onSubmit={handleSubmit} className="mb-6 space-y-4 rounded-md border border-line-2 p-4">
           <div className="grid gap-4 md:grid-cols-2">
             <Field label="Name">
               <TextInput
@@ -128,7 +128,7 @@ const TemplatesPanel = () => {
               <select
                 value={draft.category}
                 onChange={(e) => setDraft({ ...draft, category: e.target.value as Category })}
-                className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm"
+                className="w-full rounded-md border border-line-2 bg-panel px-3 py-2 text-sm"
               >
                 {CATEGORIES.map((c) => (
                   <option key={c} value={c}>
@@ -166,7 +166,7 @@ const TemplatesPanel = () => {
               placeholder="<p>Hi {{first_name}},</p>"
             />
           </Field>
-          <label className="flex items-center gap-2 text-sm text-slate-700">
+          <label className="flex items-center gap-2 text-sm text-ink-dim">
             <input
               type="checkbox"
               checked={draft.is_default ?? false}
@@ -192,9 +192,9 @@ const TemplatesPanel = () => {
         </form>
       )}
 
-      {loading && <div className="text-sm text-slate-500">Loading…</div>}
+      {loading && <div className="text-sm text-ink-faint">Loading…</div>}
       {!loading && templates.length === 0 && !showForm && (
-        <div className="rounded-md border border-dashed border-slate-200 p-6 text-center text-sm text-slate-500">
+        <div className="rounded-md border border-dashed border-line-2 p-6 text-center text-sm text-ink-faint">
           No templates yet. Create one to use across campaigns and bulk sends.
         </div>
       )}
@@ -203,16 +203,16 @@ const TemplatesPanel = () => {
         {templates.map((t) => (
           <li
             key={t.id}
-            className="rounded-md border border-slate-200 p-3"
+            className="rounded-md border border-line-2 p-3"
           >
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-slate-900">{t.name}</span>
+                  <span className="font-medium text-ink">{t.name}</span>
                   <Badge tone="neutral">{t.category}</Badge>
                   {t.is_default && <Badge tone="info">default</Badge>}
                 </div>
-                <div className="mt-1 text-xs text-slate-500">
+                <div className="mt-1 text-xs text-ink-faint">
                   Subject: {t.subject}
                 </div>
                 {t.variables.length > 0 && (

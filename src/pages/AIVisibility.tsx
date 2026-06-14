@@ -47,10 +47,10 @@ const AIVisibility = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">
+        <h1 className="text-2xl font-semibold text-ink">
           AI Visibility (GEO + AEO)
         </h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-ink-faint">
           How citable is the page by ChatGPT and Perplexity (GEO) and how well
           does it target featured snippets / People Also Ask (AEO)?
         </p>
@@ -85,9 +85,9 @@ const AIVisibility = () => {
               checked={useAi}
               onChange={(e) => setUseAi(e.target.checked)}
               disabled={loading}
-              className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+              className="rounded border-line-2 text-signal focus:ring-signal"
             />
-            <label htmlFor="use-ai" className="text-sm text-slate-600">
+            <label htmlFor="use-ai" className="text-sm text-ink-dim">
               Use Gemini to enrich PAA questions & draft answers (no-op if no
               key)
             </label>
@@ -99,7 +99,7 @@ const AIVisibility = () => {
           </div>
         </form>
         {error && (
-          <div className="mt-4 rounded-md border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">
+          <div className="mt-4 rounded-md border border-rose-200 bg-[rgba(251,113,133,0.1)] p-3 text-sm text-danger">
             {error}
           </div>
         )}
@@ -167,7 +167,7 @@ const AIVisibility = () => {
           {/* Snippet opportunities */}
           {result.snippet_opportunities.length > 0 && (
             <Card title={`Snippet Opportunities (${result.snippet_opportunities.length})`}>
-              <p className="mb-3 text-xs text-slate-500">
+              <p className="mb-3 text-xs text-ink-faint">
                 Ranked by snippet-win likelihood. Each row shows the answer
                 block under one of your headings and what would improve it.
               </p>
@@ -182,12 +182,12 @@ const AIVisibility = () => {
           {/* Quotable definitions */}
           {result.quotable_definitions.length > 0 && (
             <Card title={`Quotable Definitions (${result.quotable_definitions.length})`}>
-              <ul className="space-y-2 text-sm text-slate-700">
+              <ul className="space-y-2 text-sm text-ink-dim">
                 {result.quotable_definitions.map((d, i) => (
-                  <li key={i} className="rounded-md border border-emerald-100 bg-emerald-50 p-3">
-                    <span className="text-emerald-700">“</span>
+                  <li key={i} className="rounded-md border border-emerald-100 bg-[rgba(74,222,128,0.1)] p-3">
+                    <span className="text-success">“</span>
                     {d}
-                    <span className="text-emerald-700">”</span>
+                    <span className="text-success">”</span>
                   </li>
                 ))}
               </ul>
@@ -202,28 +202,28 @@ const AIVisibility = () => {
                   {result.paa_with_answers.map((qa, i) => (
                     <details
                       key={i}
-                      className="group rounded-md border border-slate-200 p-3 open:bg-slate-50"
+                      className="group rounded-md border border-line-2 p-3 open:bg-panel-2"
                     >
-                      <summary className="cursor-pointer list-none text-sm font-medium text-slate-800 group-open:text-indigo-700">
-                        <span className="mr-2 text-slate-400 group-open:text-indigo-500">›</span>
+                      <summary className="cursor-pointer list-none text-sm font-medium text-ink group-open:text-signal">
+                        <span className="mr-2 text-ink-faint group-open:text-signal">›</span>
                         {qa.question}
                       </summary>
-                      <p className="mt-2 pl-4 text-sm text-slate-600">{qa.answer}</p>
+                      <p className="mt-2 pl-4 text-sm text-ink-dim">{qa.answer}</p>
                     </details>
                   ))}
                 </div>
               ) : (
                 <ul className="space-y-2 text-sm">
                   {result.paa_questions.map((q, i) => (
-                    <li key={i} className="flex gap-2 text-slate-700">
-                      <span className="text-indigo-500">?</span>
+                    <li key={i} className="flex gap-2 text-ink-dim">
+                      <span className="text-signal">?</span>
                       <span>{q}</span>
                     </li>
                   ))}
                 </ul>
               )}
               {result.paa_questions.length > 0 && (
-                <div className="mt-4 border-t border-slate-100 pt-3 text-right">
+                <div className="mt-4 border-t border-line pt-3 text-right">
                   <button
                     onClick={() => {
                       const text = (result.paa_with_answers.length > 0
@@ -233,7 +233,7 @@ const AIVisibility = () => {
                       navigator.clipboard.writeText(text);
                       alert("Copied PAA to clipboard!");
                     }}
-                    className="text-xs text-indigo-600 hover:text-indigo-700"
+                    className="text-xs text-signal hover:text-signal"
                   >
                     Copy all
                   </button>
@@ -245,10 +245,10 @@ const AIVisibility = () => {
           {/* Recommendations */}
           {result.recommendations.length > 0 && (
             <Card title={`Recommendations (${result.recommendations.length})`}>
-              <ul className="space-y-2 text-sm text-slate-700">
+              <ul className="space-y-2 text-sm text-ink-dim">
                 {result.recommendations.map((r, i) => (
                   <li key={i} className="flex gap-2">
-                    <span className="text-emerald-600">→</span>
+                    <span className="text-success">→</span>
                     <span>{r}</span>
                   </li>
                 ))}
@@ -259,10 +259,10 @@ const AIVisibility = () => {
           {/* Notes */}
           {result.notes.length > 0 && (
             <Card title="Notes">
-              <ul className="space-y-1 text-xs text-slate-600">
+              <ul className="space-y-1 text-xs text-ink-dim">
                 {result.notes.map((n, i) => (
                   <li key={i} className="flex gap-2">
-                    <span className="text-slate-400">•</span>
+                    <span className="text-ink-faint">•</span>
                     <span>{n}</span>
                   </li>
                 ))}
@@ -278,9 +278,9 @@ const AIVisibility = () => {
 // -------- subcomponents --------
 
 const Stat = ({ label, value }: { label: string; value: number }) => (
-  <div className="flex items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-1.5">
-    <span className="text-xs text-slate-500">{label}</span>
-    <span className="text-sm font-semibold text-slate-800">{value}</span>
+  <div className="flex items-center gap-2 rounded-md border border-line-2 bg-panel-2 px-3 py-1.5">
+    <span className="text-xs text-ink-faint">{label}</span>
+    <span className="text-sm font-semibold text-ink">{value}</span>
   </div>
 );
 
@@ -289,20 +289,20 @@ const SignalRow = ({ signal }: { signal: GEOSignal }) => {
     signal.score >= 80 ? "success" : signal.score >= 50 ? "warn" : "danger";
   const barColor =
     signal.score >= 80
-      ? "bg-emerald-500"
+      ? "bg-[rgba(74,222,128,0.1)]0"
       : signal.score >= 50
-        ? "bg-amber-500"
-        : "bg-rose-500";
+        ? "bg-[rgba(245,196,81,0.1)]0"
+        : "bg-[rgba(251,113,133,0.1)]0";
   return (
-    <div className="rounded-md border border-slate-200 p-3">
+    <div className="rounded-md border border-line-2 p-3">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-slate-800">{signal.label}</p>
-          <p className="mt-0.5 text-xs text-slate-500">{signal.detail}</p>
+          <p className="text-sm font-medium text-ink">{signal.label}</p>
+          <p className="mt-0.5 text-xs text-ink-faint">{signal.detail}</p>
         </div>
         <Badge tone={tone}>{signal.score.toFixed(0)}</Badge>
       </div>
-      <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+      <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-panel-2">
         <div
           className={`h-full ${barColor} transition-all`}
           style={{ width: `${Math.min(100, Math.max(0, signal.score))}%` }}
@@ -326,30 +326,30 @@ const SnippetRow = ({ opp }: { opp: SnippetOpportunity }) => {
     definition: "info",
   };
   return (
-    <div className="rounded-md border border-slate-200 p-3">
+    <div className="rounded-md border border-line-2 p-3">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-medium text-slate-800">
+            <span className="text-sm font-medium text-ink">
               {opp.heading}
             </span>
             <Badge tone={typeBadge[opp.block_type] ?? "neutral"}>
               {opp.block_type}
             </Badge>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-ink-faint">
               {opp.word_count} words
             </span>
           </div>
-          <p className="mt-1 line-clamp-2 text-xs text-slate-600">
+          <p className="mt-1 line-clamp-2 text-xs text-ink-dim">
             {opp.text_preview}
           </p>
-          <p className="mt-1 text-xs italic text-slate-500">
+          <p className="mt-1 text-xs italic text-ink-faint">
             {opp.rationale}
           </p>
           {opp.suggestions.length > 0 && (
             <ul className="mt-2 space-y-1">
               {opp.suggestions.map((s, i) => (
-                <li key={i} className="flex gap-2 text-xs text-indigo-700">
+                <li key={i} className="flex gap-2 text-xs text-signal">
                   <span>→</span>
                   <span>{s}</span>
                 </li>

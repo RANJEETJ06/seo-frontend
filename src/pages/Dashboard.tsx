@@ -79,10 +79,10 @@ const Dashboard = () => {
     <div className="space-y-6">
       <div className="flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">
+          <h1 className="text-2xl font-semibold text-ink">
             Welcome back{user?.full_name ? `, ${user.full_name}` : ""}
           </h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-ink-faint">
             Manage your SEO projects and run new analyses.
           </p>
         </div>
@@ -122,7 +122,7 @@ const Dashboard = () => {
               </Field>
             </div>
             {submitError && (
-              <div className="md:col-span-2 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+              <div className="md:col-span-2 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
                 {submitError}
               </div>
             )}
@@ -148,21 +148,21 @@ const Dashboard = () => {
 
       <Card title={`Projects (${items.length})`}>
         {loading && (
-          <div className="py-8 text-center text-sm text-slate-500">
+          <div className="py-8 text-center text-sm text-ink-faint">
             Loading projects…
           </div>
         )}
         {error && (
-          <div className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+          <div className="rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
             {error}
           </div>
         )}
         {!loading && !error && items.length === 0 && (
           <div className="py-12 text-center">
-            <div className="text-sm font-medium text-slate-700">
+            <div className="text-sm font-medium text-ink-dim">
               No projects yet
             </div>
-            <div className="mt-1 text-xs text-slate-500">
+            <div className="mt-1 text-xs text-ink-faint">
               Create your first project to start tracking SEO reports.
             </div>
           </div>
@@ -172,46 +172,46 @@ const Dashboard = () => {
             {items.map((p) => (
               <div
                 key={p.id}
-                className="rounded-lg border border-slate-200 p-4 transition hover:border-indigo-200 hover:shadow-sm"
+                className="rounded-lg border border-line-2 p-4 transition hover:border-[rgba(202,249,76,0.25)] hover:shadow-sm"
               >
                 <div className="flex items-start justify-between">
                   <div className="min-w-0 flex-1">
-                    <div className="truncate text-sm font-semibold text-slate-900">
+                    <div className="truncate text-sm font-semibold text-ink">
                       {p.name}
                     </div>
-                    <div className="mt-0.5 truncate text-xs text-slate-500">
+                    <div className="mt-0.5 truncate text-xs text-ink-faint">
                       {p.domain}
                     </div>
                   </div>
                   <Badge tone="info">#{p.id}</Badge>
                 </div>
                 {p.description && (
-                  <div className="mt-3 line-clamp-2 text-xs text-slate-600">
+                  <div className="mt-3 line-clamp-2 text-xs text-ink-dim">
                     {p.description}
                   </div>
                 )}
                 <div className="mt-4 flex flex-wrap items-center gap-2">
                   <Link
                     to={`/reports?project=${p.id}`}
-                    className="text-xs font-medium text-indigo-600 hover:underline"
+                    className="text-xs font-medium text-signal hover:underline"
                   >
                     Reports
                   </Link>
                   <Link
                     to={`/analyze?project=${p.id}`}
-                    className="text-xs font-medium text-indigo-600 hover:underline"
+                    className="text-xs font-medium text-signal hover:underline"
                   >
                     Analyze
                   </Link>
                   <button
                     onClick={() => startEdit(p)}
-                    className="text-xs font-medium text-indigo-600 hover:underline"
+                    className="text-xs font-medium text-signal hover:underline"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(p.id)}
-                    className="ml-auto text-xs text-rose-600 hover:underline"
+                    className="ml-auto text-xs text-danger hover:underline"
                   >
                     Delete
                   </button>

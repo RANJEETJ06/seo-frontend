@@ -29,10 +29,10 @@ const OutreachDashboard = () => {
     }
   };
 
-  if (loading) return <div className="text-sm text-slate-500">Loading…</div>;
+  if (loading) return <div className="text-sm text-ink-faint">Loading…</div>;
   if (error)
     return (
-      <div className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+      <div className="rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
         {error}
       </div>
     );
@@ -77,10 +77,10 @@ const OutreachDashboard = () => {
         <Card title="Account summary">
           <div className="space-y-2">
             {dashboard.accounts.map((a) => (
-              <div key={a.email_account_id} className="flex items-center justify-between border-b border-slate-100 py-2 last:border-b-0">
+              <div key={a.email_account_id} className="flex items-center justify-between border-b border-line py-2 last:border-b-0">
                 <div className="text-sm">
-                  <div className="font-medium text-slate-900">{a.email_address}</div>
-                  <div className="text-xs text-slate-500">
+                  <div className="font-medium text-ink">{a.email_address}</div>
+                  <div className="text-xs text-ink-faint">
                     {a.sent_today}/{a.daily_cap} sent today
                     {a.last_used_at && ` · last used ${new Date(a.last_used_at).toLocaleTimeString()}`}
                   </div>
@@ -123,18 +123,18 @@ interface StatCardProps {
 const StatCard = ({ label, value, subtext, tone = "neutral" }: StatCardProps) => {
   const bgColor =
     tone === "success"
-      ? "bg-emerald-50"
+      ? "bg-[rgba(74,222,128,0.1)]"
       : tone === "warn"
-      ? "bg-amber-50"
-      : "bg-slate-50";
+      ? "bg-[rgba(245,196,81,0.1)]"
+      : "bg-panel-2";
   const textColor =
     tone === "success"
-      ? "text-emerald-700"
+      ? "text-success"
       : tone === "warn"
-      ? "text-amber-700"
-      : "text-slate-700";
+      ? "text-warn"
+      : "text-ink-dim";
   return (
-    <div className={`rounded-lg border border-slate-200 ${bgColor} p-4`}>
+    <div className={`rounded-lg border border-line-2 ${bgColor} p-4`}>
       <div className={`text-xs font-medium ${textColor} opacity-75`}>{label}</div>
       <div className={`mt-1 text-3xl font-bold ${textColor}`}>{value}</div>
       {subtext && <div className={`mt-1 text-xs ${textColor}`}>{subtext}</div>}
@@ -156,23 +156,23 @@ const RecentSendsList = ({ sends }: { sends: RecentSendEntry[] }) => {
   return (
     <ul className="space-y-2 text-sm">
       {sends.slice(0, 10).map((s) => (
-        <li key={s.id} className="flex items-start justify-between gap-2 border-b border-slate-100 py-2 last:border-b-0">
+        <li key={s.id} className="flex items-start justify-between gap-2 border-b border-line py-2 last:border-b-0">
           <div>
-            <div className="font-medium text-slate-900">{s.recipient}</div>
-            <div className="text-xs text-slate-500">{s.subject}</div>
+            <div className="font-medium text-ink">{s.recipient}</div>
+            <div className="text-xs text-ink-faint">{s.subject}</div>
           </div>
           <div className="flex flex-shrink-0 flex-col items-end gap-1">
             <Badge tone={statusBadge(s.status)}>{s.status}</Badge>
-            <div className="text-xs text-slate-400">
+            <div className="text-xs text-ink-faint">
               {new Date(s.created_at).toLocaleString()}
             </div>
             {s.opened_at && (
-              <div className="text-xs text-emerald-600">
+              <div className="text-xs text-success">
                 Opened {new Date(s.opened_at).toLocaleString()}
               </div>
             )}
             {s.replied_at && (
-              <div className="text-xs text-emerald-600">
+              <div className="text-xs text-success">
                 Replied {new Date(s.replied_at).toLocaleString()}
               </div>
             )}

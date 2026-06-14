@@ -31,14 +31,14 @@ const AITools = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">AI Tools</h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <h1 className="text-2xl font-semibold text-ink">AI Tools</h1>
+        <p className="mt-1 text-sm text-ink-faint">
           AI-generated recommendations and a retrieval-augmented assistant
           grounded in your ingested pages.
         </p>
       </div>
 
-      <div className="inline-flex rounded-md border border-slate-200 bg-white p-1">
+      <div className="inline-flex rounded-md border border-line-2 bg-panel p-1">
         {(
           [
             { id: "recommend", label: "Recommendations" },
@@ -53,8 +53,8 @@ const AITools = () => {
             onClick={() => setTab(t.id)}
             className={`rounded px-4 py-1.5 text-xs font-medium transition ${
               tab === t.id
-                ? "bg-indigo-600 text-white"
-                : "text-slate-600 hover:bg-slate-100"
+                ? "bg-signal text-[#363a41]"
+                : "text-ink-dim hover:bg-white/[0.06]"
             }`}
           >
             {t.label}
@@ -81,7 +81,7 @@ const OutreachHub = () => {
   const [tab, setTab] = useState<OutreachTab>("dashboard");
   return (
     <div className="space-y-4">
-      <div className="inline-flex rounded-md border border-slate-200 bg-white p-1">
+      <div className="inline-flex rounded-md border border-line-2 bg-panel p-1">
         {(
           [
             { id: "dashboard", label: "Dashboard" },
@@ -95,7 +95,7 @@ const OutreachHub = () => {
             className={`rounded px-3 py-1 text-xs font-medium transition ${
               tab === t.id
                 ? "bg-emerald-600 text-white"
-                : "text-slate-600 hover:bg-slate-100"
+                : "text-ink-dim hover:bg-white/[0.06]"
             }`}
           >
             {t.label}
@@ -140,15 +140,15 @@ const RecommendPanel = () => {
   return (
     <div className="space-y-6">
       <Card title="Generate recommendations">
-        <div className="mb-4 inline-flex rounded-md border border-slate-200 p-1">
+        <div className="mb-4 inline-flex rounded-md border border-line-2 p-1">
           {(["url", "content"] as const).map((m) => (
             <button
               key={m}
               onClick={() => setMode(m)}
               className={`rounded px-3 py-1 text-xs font-medium transition ${
                 mode === m
-                  ? "bg-indigo-600 text-white"
-                  : "text-slate-600 hover:bg-slate-100"
+                  ? "bg-signal text-[#35383e]"
+                  : "text-ink-dim hover:bg-white/[0.06]"
               }`}
             >
               {m === "url" ? "From URL" : "From content"}
@@ -195,7 +195,7 @@ const RecommendPanel = () => {
             </Button>
           </div>
           {error && (
-            <div className="md:col-span-2 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="md:col-span-2 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {error}
             </div>
           )}
@@ -206,17 +206,17 @@ const RecommendPanel = () => {
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
             <Card title="Summary">
-              <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
+              <p className="whitespace-pre-wrap text-sm leading-relaxed text-ink-dim">
                 {result.summary}
               </p>
             </Card>
             <Card
               title={`Recommendations (${result.recommendations.length})`}
             >
-              <ul className="space-y-2 text-sm text-slate-700">
+              <ul className="space-y-2 text-sm text-ink-dim">
                 {result.recommendations.map((r, i) => (
                   <li key={i} className="flex gap-2">
-                    <span className="text-emerald-600">→</span>
+                    <span className="text-success">→</span>
                     <span>{r}</span>
                   </li>
                 ))}
@@ -228,15 +228,15 @@ const RecommendPanel = () => {
               {result.score_estimate !== null &&
               result.score_estimate !== undefined ? (
                 <div className="text-center">
-                  <div className="text-5xl font-semibold text-indigo-600">
+                  <div className="text-5xl font-semibold text-signal">
                     {Math.round(result.score_estimate)}
                   </div>
-                  <div className="mt-1 text-xs text-slate-500">
+                  <div className="mt-1 text-xs text-ink-faint">
                     out of 100
                   </div>
                 </div>
               ) : (
-                <div className="text-sm text-slate-500">Not available</div>
+                <div className="text-sm text-ink-faint">Not available</div>
               )}
             </div>
           </Card>
@@ -308,12 +308,12 @@ const BacklinkPanel = () => {
               placeholder="seo optimization"
             />
           </Field>
-          <label className="flex items-end gap-2 pb-2 text-sm text-slate-700">
+          <label className="flex items-end gap-2 pb-2 text-sm text-ink-dim">
             <input
               type="checkbox"
               checked={crawlInternal}
               onChange={(e) => setCrawlInternal(e.target.checked)}
-              className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-200"
+              className="h-4 w-4 rounded border-line-2 text-signal focus:ring-signal/30"
             />
             Auto-crawl site for internal pages
           </label>
@@ -345,7 +345,7 @@ const BacklinkPanel = () => {
             </Button>
           </div>
           {error && (
-            <div className="md:col-span-2 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="md:col-span-2 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {error}
             </div>
           )}
@@ -356,7 +356,7 @@ const BacklinkPanel = () => {
         <div className="space-y-6">
           <Card title="Summary">
             <div className="flex items-start justify-between gap-4">
-              <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
+              <p className="whitespace-pre-wrap text-sm leading-relaxed text-ink-dim">
                 {result.summary}
               </p>
               <Badge tone={result.ai_enabled ? "success" : "neutral"}>
@@ -369,7 +369,7 @@ const BacklinkPanel = () => {
             title={`Internal backlink suggestions (${result.internal_link_suggestions.length})`}
           >
             {result.internal_link_suggestions.length === 0 ? (
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-ink-faint">
                 No internal link opportunities found.
               </p>
             ) : (
@@ -377,27 +377,27 @@ const BacklinkPanel = () => {
                 {result.internal_link_suggestions.map((s, i) => (
                   <li
                     key={i}
-                    className="rounded-md border border-slate-100 p-3"
+                    className="rounded-md border border-line p-3"
                   >
                     <div className="mb-1 flex items-center justify-between gap-2">
-                      <span className="font-medium text-slate-800">
+                      <span className="font-medium text-ink">
                         Anchor: “{s.anchor_text}”
                       </span>
                       <Badge tone="info">
                         {Math.round(s.confidence * 100)}% confidence
                       </Badge>
                     </div>
-                    <div className="text-xs text-slate-500">
+                    <div className="text-xs text-ink-faint">
                       Add a link on{" "}
-                      <span className="break-all text-slate-700">
+                      <span className="break-all text-ink-dim">
                         {s.source_url}
                       </span>{" "}
                       → {s.target_url}
                     </div>
-                    <p className="mt-2 rounded bg-slate-50 p-2 text-xs italic text-slate-600">
+                    <p className="mt-2 rounded bg-panel-2 p-2 text-xs italic text-ink-dim">
                       …{s.context}…
                     </p>
-                    <p className="mt-1 text-xs text-slate-500">{s.reason}</p>
+                    <p className="mt-1 text-xs text-ink-faint">{s.reason}</p>
                   </li>
                 ))}
               </ul>
@@ -406,7 +406,7 @@ const BacklinkPanel = () => {
 
           <Card title={`External prospects (${result.prospects.length})`}>
             {result.prospects.length === 0 ? (
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-ink-faint">
                 No prospect URLs were provided.
               </p>
             ) : (
@@ -414,10 +414,10 @@ const BacklinkPanel = () => {
                 {result.prospects.map((p, i) => (
                   <li
                     key={i}
-                    className="rounded-md border border-slate-100 p-3"
+                    className="rounded-md border border-line p-3"
                   >
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="break-all font-medium text-slate-800">
+                      <span className="break-all font-medium text-ink">
                         {p.url}
                       </span>
                       <Badge
@@ -438,7 +438,7 @@ const BacklinkPanel = () => {
                         <Badge tone="neutral">resource section</Badge>
                       )}
                     </div>
-                    <p className="mt-1 text-xs text-slate-500">
+                    <p className="mt-1 text-xs text-ink-faint">
                       {p.rationale}
                     </p>
                     {p.shared_topics.length > 0 && (
@@ -446,7 +446,7 @@ const BacklinkPanel = () => {
                         {p.shared_topics.map((t, j) => (
                           <span
                             key={j}
-                            className="rounded bg-slate-100 px-1.5 py-0.5 text-[11px] text-slate-600"
+                            className="rounded bg-panel-2 px-1.5 py-0.5 text-[11px] text-ink-dim"
                           >
                             {t}
                           </span>
@@ -455,10 +455,10 @@ const BacklinkPanel = () => {
                     )}
                     {p.outreach_email && (
                       <details className="mt-2">
-                        <summary className="cursor-pointer text-xs font-medium text-indigo-600">
+                        <summary className="cursor-pointer text-xs font-medium text-signal">
                           Outreach email
                         </summary>
-                        <pre className="mt-2 whitespace-pre-wrap rounded bg-slate-50 p-3 text-xs leading-relaxed text-slate-700">
+                        <pre className="mt-2 whitespace-pre-wrap rounded bg-panel-2 p-3 text-xs leading-relaxed text-ink-dim">
                           {p.outreach_email}
                         </pre>
                       </details>
@@ -551,7 +551,7 @@ const RagPanel = () => {
             {ingesting ? "Ingesting…" : "Ingest"}
           </Button>
           {ingestError && (
-            <div className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {ingestError}
             </div>
           )}
@@ -559,16 +559,16 @@ const RagPanel = () => {
 
         {ingested.length > 0 && (
           <div className="mt-6">
-            <div className="mb-2 text-xs font-medium text-slate-600">
+            <div className="mb-2 text-xs font-medium text-ink-dim">
               Recently ingested (this session)
             </div>
             <ul className="space-y-2 text-sm">
               {ingested.map((it, i) => (
                 <li
                   key={i}
-                  className="flex items-center justify-between gap-2 rounded-md border border-slate-100 px-3 py-2"
+                  className="flex items-center justify-between gap-2 rounded-md border border-line px-3 py-2"
                 >
-                  <span className="truncate text-slate-700">{it.url}</span>
+                  <span className="truncate text-ink-dim">{it.url}</span>
                   <Badge tone="info">{it.chunks} chunks</Badge>
                 </li>
               ))}
@@ -613,7 +613,7 @@ const RagPanel = () => {
             {asking ? "Asking…" : "Ask"}
           </Button>
           {askError && (
-            <div className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {askError}
             </div>
           )}
@@ -622,23 +622,23 @@ const RagPanel = () => {
         {answer && (
           <div className="mt-6 space-y-4">
             <div>
-              <div className="mb-1 text-xs font-medium text-slate-600">
+              <div className="mb-1 text-xs font-medium text-ink-dim">
                 Answer
               </div>
-              <p className="whitespace-pre-wrap rounded-md bg-slate-50 p-3 text-sm leading-relaxed text-slate-800">
+              <p className="whitespace-pre-wrap rounded-md bg-panel-2 p-3 text-sm leading-relaxed text-ink">
                 {answer.answer}
               </p>
             </div>
             {answer.sources.length > 0 && (
               <div>
-                <div className="mb-1 text-xs font-medium text-slate-600">
+                <div className="mb-1 text-xs font-medium text-ink-dim">
                   Sources ({answer.sources.length})
                 </div>
                 <ul className="space-y-1 text-xs">
                   {answer.sources.map((s, i) => (
                     <li
                       key={i}
-                      className="truncate rounded border border-slate-100 px-2 py-1 text-slate-600"
+                      className="truncate rounded border border-line px-2 py-1 text-ink-dim"
                     >
                       {(s.url as string | undefined) ??
                         JSON.stringify(s).slice(0, 200)}
@@ -673,7 +673,7 @@ const splitUrls = (raw: string) =>
     .filter(Boolean);
 
 const GuardrailNote = ({ text }: { text: string }) => (
-  <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-800">
+  <div className="rounded-md border border-amber-200 bg-[rgba(245,196,81,0.1)] px-3 py-2 text-xs leading-relaxed text-amber-800">
     <span className="font-semibold">Safe by design: </span>
     {text}
   </div>
@@ -683,7 +683,7 @@ const LinkBuilderPanel = () => {
   const [sub, setSub] = useState<BuilderTab>("internal");
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-1 rounded-md border border-slate-200 bg-white p-1">
+      <div className="flex flex-wrap gap-1 rounded-md border border-line-2 bg-panel p-1">
         {(
           [
             { id: "internal", label: "Internal export" },
@@ -699,8 +699,8 @@ const LinkBuilderPanel = () => {
             onClick={() => setSub(t.id)}
             className={`rounded px-3 py-1.5 text-xs font-medium transition ${
               sub === t.id
-                ? "bg-indigo-600 text-white"
-                : "text-slate-600 hover:bg-slate-100"
+                ? "bg-signal text-[#2f3239]"
+                : "text-ink-dim hover:bg-white/[0.06]"
             }`}
           >
             {t.label}
@@ -793,7 +793,7 @@ const InternalExportTab = () => {
             </Button>
           </div>
           {error && (
-            <div className="md:col-span-2 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="md:col-span-2 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {error}
             </div>
           )}
@@ -807,7 +807,7 @@ const InternalExportTab = () => {
             result.patches.length > 0 ? (
               <button
                 onClick={downloadCsv}
-                className="text-xs font-medium text-indigo-600 hover:underline"
+                className="text-xs font-medium text-signal hover:underline"
               >
                 Download CSV
               </button>
@@ -816,17 +816,17 @@ const InternalExportTab = () => {
         >
           <GuardrailNote text={result.guardrails} />
           {result.patches.length === 0 ? (
-            <p className="mt-3 text-sm text-slate-500">
+            <p className="mt-3 text-sm text-ink-faint">
               No exact-match anchor opportunities found.
             </p>
           ) : (
             <ul className="mt-3 space-y-3 text-sm">
               {result.patches.map((p, i) => (
-                <li key={i} className="rounded-md border border-slate-100 p-3">
-                  <div className="break-all text-xs text-slate-500">
+                <li key={i} className="rounded-md border border-line p-3">
+                  <div className="break-all text-xs text-ink-faint">
                     {p.source_url} → <b>{p.anchor_text}</b>
                   </div>
-                  <pre className="mt-2 overflow-x-auto rounded bg-slate-900 p-3 text-[11px] leading-relaxed text-slate-100">
+                  <pre className="mt-2 overflow-x-auto rounded bg-bg-soft p-3 text-[11px] leading-relaxed text-ink">
                     {p.diff || p.patched_snippet}
                   </pre>
                 </li>
@@ -904,7 +904,7 @@ const DiscoverTab = () => {
             </Button>
           </div>
           {error && (
-            <div className="md:col-span-2 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="md:col-span-2 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {error}
             </div>
           )}
@@ -913,12 +913,12 @@ const DiscoverTab = () => {
 
       {result && (
         <Card title={`Queued prospects (${result.prospects.length})`}>
-          <p className="mb-3 text-sm text-slate-600">{result.summary}</p>
+          <p className="mb-3 text-sm text-ink-dim">{result.summary}</p>
           <ul className="space-y-3 text-sm">
             {result.prospects.map((p, i) => (
-              <li key={i} className="rounded-md border border-slate-100 p-3">
+              <li key={i} className="rounded-md border border-line p-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="break-all font-medium text-slate-800">
+                  <span className="break-all font-medium text-ink">
                     {p.url}
                   </span>
                   <Badge tone={p.relevance_score >= 25 ? "success" : "neutral"}>
@@ -927,10 +927,10 @@ const DiscoverTab = () => {
                 </div>
                 {p.outreach_email && (
                   <details className="mt-2">
-                    <summary className="cursor-pointer text-xs font-medium text-indigo-600">
+                    <summary className="cursor-pointer text-xs font-medium text-signal">
                       Drafted email (review before sending)
                     </summary>
-                    <pre className="mt-2 whitespace-pre-wrap rounded bg-slate-50 p-3 text-xs text-slate-700">
+                    <pre className="mt-2 whitespace-pre-wrap rounded bg-panel-2 p-3 text-xs text-ink-dim">
                       {p.outreach_email}
                     </pre>
                   </details>
@@ -1009,7 +1009,7 @@ const BrokenLinksTab = () => {
             </Button>
           </div>
           {error && (
-            <div className="md:col-span-2 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="md:col-span-2 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {error}
             </div>
           )}
@@ -1019,10 +1019,10 @@ const BrokenLinksTab = () => {
       {result && (
         <Card title={`Opportunities (${result.opportunities.length})`}>
           <GuardrailNote text={result.guardrails} />
-          <p className="my-3 text-sm text-slate-600">{result.summary}</p>
+          <p className="my-3 text-sm text-ink-dim">{result.summary}</p>
           <ul className="space-y-3 text-sm">
             {result.opportunities.map((o, i) => (
-              <li key={i} className="rounded-md border border-slate-100 p-3">
+              <li key={i} className="rounded-md border border-line p-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge tone="warn">HTTP {o.http_status}</Badge>
                   <Badge
@@ -1031,15 +1031,15 @@ const BrokenLinksTab = () => {
                     {o.relevance_score}% relevant
                   </Badge>
                 </div>
-                <p className="mt-1 break-all text-xs text-slate-500">
+                <p className="mt-1 break-all text-xs text-ink-faint">
                   On <b>{o.resource_url}</b> → dead link {o.broken_url}
                 </p>
                 {o.outreach_email && (
                   <details className="mt-2">
-                    <summary className="cursor-pointer text-xs font-medium text-indigo-600">
+                    <summary className="cursor-pointer text-xs font-medium text-signal">
                       Drafted email (review before sending)
                     </summary>
-                    <pre className="mt-2 whitespace-pre-wrap rounded bg-slate-50 p-3 text-xs text-slate-700">
+                    <pre className="mt-2 whitespace-pre-wrap rounded bg-panel-2 p-3 text-xs text-ink-dim">
                       {o.outreach_email}
                     </pre>
                   </details>
@@ -1117,7 +1117,7 @@ const GuestPostTab = () => {
             </Button>
           </div>
           {error && (
-            <div className="md:col-span-2 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="md:col-span-2 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {error}
             </div>
           )}
@@ -1135,7 +1135,7 @@ const GuestPostTab = () => {
           }
         >
           <GuardrailNote text={result.guardrails} />
-          <pre className="mt-3 max-h-[28rem] overflow-y-auto whitespace-pre-wrap rounded bg-slate-50 p-4 text-xs leading-relaxed text-slate-700">
+          <pre className="mt-3 max-h-[28rem] overflow-y-auto whitespace-pre-wrap rounded bg-panel-2 p-4 text-xs leading-relaxed text-ink-dim">
             {result.markdown}
           </pre>
         </Card>
@@ -1230,7 +1230,7 @@ const DirectoriesTab = () => {
             </Button>
           </div>
           {error && (
-            <div className="md:col-span-2 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="md:col-span-2 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {error}
             </div>
           )}
@@ -1242,26 +1242,26 @@ const DirectoriesTab = () => {
           <GuardrailNote text={result.guardrails} />
           <ul className="mt-3 space-y-3 text-sm">
             {result.items.map((it, i) => (
-              <li key={i} className="rounded-md border border-slate-100 p-3">
+              <li key={i} className="rounded-md border border-line p-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="font-medium text-slate-800">
+                  <span className="font-medium text-ink">
                     {it.directory_name}
                   </span>
                   <a
                     href={it.submit_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-xs font-medium text-indigo-600 hover:underline"
+                    className="text-xs font-medium text-signal hover:underline"
                   >
                     Open submit page →
                   </a>
                 </div>
-                <p className="mt-1 text-xs text-slate-500">{it.notes}</p>
-                <pre className="mt-2 whitespace-pre-wrap rounded bg-slate-50 p-3 text-xs text-slate-700">
+                <p className="mt-1 text-xs text-ink-faint">{it.notes}</p>
+                <pre className="mt-2 whitespace-pre-wrap rounded bg-panel-2 p-3 text-xs text-ink-dim">
                   {JSON.stringify(it.payload, null, 2)}
                 </pre>
                 {it.missing_fields.length > 0 && (
-                  <p className="mt-1 text-[11px] text-amber-700">
+                  <p className="mt-1 text-[11px] text-warn">
                     Missing: {it.missing_fields.join(", ")}
                   </p>
                 )}
@@ -1337,8 +1337,8 @@ const QueueTab = () => {
               onClick={() => setScope(s.id)}
               className={`rounded px-2 py-1 text-xs font-medium ${
                 scope === s.id
-                  ? "bg-indigo-600 text-white"
-                  : "text-slate-600 hover:bg-slate-100"
+                  ? "bg-signal text-[#0a0b0d]"
+                  : "text-ink-dim hover:bg-white/[0.06]"
               }`}
             >
               {s.label}
@@ -1355,8 +1355,8 @@ const QueueTab = () => {
               onClick={() => setKind(k)}
               className={`rounded px-2 py-1 text-xs font-medium ${
                 kind === k
-                  ? "bg-indigo-600 text-white"
-                  : "text-slate-600 hover:bg-slate-100"
+                  ? "bg-signal text-[#0a0b0d]"
+                  : "text-ink-dim hover:bg-white/[0.06]"
               }`}
             >
               {k}
@@ -1365,29 +1365,29 @@ const QueueTab = () => {
         </div>
         <button
           onClick={() => load(kind, scope)}
-          className="text-xs font-medium text-indigo-600 hover:underline"
+          className="text-xs font-medium text-signal hover:underline"
         >
           {loading ? "Loading…" : "Refresh"}
         </button>
       </div>
       {error && (
-        <div className="mt-2 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+        <div className="mt-2 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
           {error}
         </div>
       )}
       {data && (
         <ul className="mt-3 space-y-2 text-sm">
           {data.items.length === 0 && (
-            <li className="text-slate-500">Queue is empty.</li>
+            <li className="text-ink-faint">Queue is empty.</li>
           )}
           {data.items.map((row, i) => {
             const id = Number(row.id);
             return (
               <li
                 key={i}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-slate-100 p-3"
+                className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-line p-3"
               >
-                <span className="break-all text-xs text-slate-700">
+                <span className="break-all text-xs text-ink-dim">
                   #{id}{" "}
                   {String(
                     row.prospect_url ||
@@ -1402,7 +1402,7 @@ const QueueTab = () => {
                     <button
                       type="button"
                       onClick={() => advance(id, "approved")}
-                      className="rounded border border-emerald-200 px-2 py-1 text-xs text-emerald-700 hover:bg-emerald-50"
+                      className="rounded border border-emerald-200 px-2 py-1 text-xs text-success hover:bg-[rgba(74,222,128,0.1)]"
                     >
                       Approve
                     </button>
@@ -1412,7 +1412,7 @@ const QueueTab = () => {
                     onChange={(e) =>
                       e.target.value && advance(id, e.target.value)
                     }
-                    className="rounded border border-slate-200 px-1.5 py-1 text-xs"
+                    className="rounded border border-line-2 px-1.5 py-1 text-xs"
                   >
                     <option value="">set status…</option>
                     <option value="approved">approved</option>

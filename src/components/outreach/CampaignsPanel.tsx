@@ -96,13 +96,13 @@ const CampaignsPanel = () => {
       }
     >
       {error && (
-        <div className="mb-3 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+        <div className="mb-3 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
           {error}
         </div>
       )}
 
       {lastResult && (
-        <div className="mb-3 rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
+        <div className="mb-3 rounded-md bg-[rgba(74,222,128,0.1)] px-3 py-2 text-sm text-success">
           Batch finished — sent {lastResult.sent}, failed {lastResult.failed},
           skipped {lastResult.skipped}. Quota remaining today: {lastResult.quota_remaining}.
         </div>
@@ -119,20 +119,20 @@ const CampaignsPanel = () => {
         />
       )}
 
-      {loading && <div className="text-sm text-slate-500">Loading…</div>}
+      {loading && <div className="text-sm text-ink-faint">Loading…</div>}
       {!loading && campaigns.length === 0 && !showForm && (
-        <div className="rounded-md border border-dashed border-slate-200 p-6 text-center text-sm text-slate-500">
+        <div className="rounded-md border border-dashed border-line-2 p-6 text-center text-sm text-ink-faint">
           No campaigns yet. Create one to send to multiple prospects in a batch.
         </div>
       )}
 
       <ul className="space-y-2">
         {campaigns.map((c) => (
-          <li key={c.id} className="rounded-md border border-slate-200 p-3">
+          <li key={c.id} className="rounded-md border border-line-2 p-3">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-slate-900">{c.name}</span>
+                  <span className="font-medium text-ink">{c.name}</span>
                   <Badge
                     tone={
                       c.status === "completed"
@@ -147,7 +147,7 @@ const CampaignsPanel = () => {
                     {c.status}
                   </Badge>
                 </div>
-                <div className="mt-1 text-xs text-slate-500">
+                <div className="mt-1 text-xs text-ink-faint">
                   Sent {c.sent_count} · Opened {c.opened_count} · Replied {c.replied_count} · Failed {c.failed_count}
                 </div>
               </div>
@@ -293,7 +293,7 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6 space-y-4 rounded-md border border-slate-200 p-4">
+    <form onSubmit={handleSubmit} className="mb-6 space-y-4 rounded-md border border-line-2 p-4">
       <div className="grid gap-4 md:grid-cols-2">
         <Field label="Campaign name">
           <TextInput
@@ -308,7 +308,7 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
             value={accountId}
             onChange={(e) => setAccountId(e.target.value ? Number(e.target.value) : "")}
             required
-            className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm"
+            className="w-full rounded-md border border-line-2 bg-panel px-3 py-2 text-sm"
           >
             <option value="">— pick account —</option>
             {accounts.map((a) => (
@@ -323,7 +323,7 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
             value={templateId}
             onChange={(e) => setTemplateId(e.target.value ? Number(e.target.value) : "")}
             required
-            className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm"
+            className="w-full rounded-md border border-line-2 bg-panel px-3 py-2 text-sm"
           >
             <option value="">— pick template —</option>
             {templates.map((t) => (
@@ -337,7 +337,7 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
           <select
             value={fromEmail}
             onChange={(e) => setFromEmail(e.target.value)}
-            className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm"
+            className="w-full rounded-md border border-line-2 bg-panel px-3 py-2 text-sm"
             disabled={!selectedAccount}
           >
             <option value="">— default —</option>
@@ -350,7 +350,7 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
         </Field>
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-slate-700">
+      <label className="flex items-center gap-2 text-sm text-ink-dim">
         <input
           type="checkbox"
           checked={trackOpens}
@@ -361,7 +361,7 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
 
       <div>
         <div className="mb-2 flex items-center justify-between">
-          <div className="text-xs font-medium text-slate-700">
+          <div className="text-xs font-medium text-ink-dim">
             Prospects ({selected.size} selected, {prospects.length} available)
           </div>
           <div className="flex gap-2">
@@ -377,9 +377,9 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
             </Button>
           </div>
         </div>
-        <div className="max-h-64 overflow-y-auto rounded-md border border-slate-200">
+        <div className="max-h-64 overflow-y-auto rounded-md border border-line-2">
           {prospects.length === 0 ? (
-            <div className="p-4 text-center text-sm text-slate-500">
+            <div className="p-4 text-center text-sm text-ink-faint">
               No approved prospects with contact emails yet. Use the Backlink Agent
               and approve prospects (with contact emails) first.
             </div>
@@ -388,7 +388,7 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
               {prospects.map((p) => (
                 <li
                   key={p.id}
-                  className="flex items-center gap-3 border-b border-slate-100 px-3 py-2 last:border-b-0"
+                  className="flex items-center gap-3 border-b border-line px-3 py-2 last:border-b-0"
                 >
                   <input
                     type="checkbox"
@@ -396,8 +396,8 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
                     onChange={() => toggle(p.id)}
                   />
                   <div className="flex-1 text-sm">
-                    <div className="font-medium text-slate-900">{p.domain}</div>
-                    <div className="text-xs text-slate-500">
+                    <div className="font-medium text-ink">{p.domain}</div>
+                    <div className="text-xs text-ink-faint">
                       {p.contact_email} · {p.prospect_url}
                     </div>
                   </div>
@@ -410,7 +410,7 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
 
       <div>
         <div className="mb-2 flex items-center justify-between">
-          <div className="text-xs font-medium text-slate-700">
+          <div className="text-xs font-medium text-ink-dim">
             Follow-up sequence ({followUps.length} steps)
           </div>
           <Button type="button" variant="secondary" onClick={addFollowUp} disabled={templates.length === 0}>
@@ -418,15 +418,15 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
           </Button>
         </div>
         {followUps.length === 0 ? (
-          <div className="rounded-md border border-dashed border-slate-200 p-3 text-center text-xs text-slate-500">
+          <div className="rounded-md border border-dashed border-line-2 p-3 text-center text-xs text-ink-faint">
             No follow-ups. Add one to send a reminder after N days if no reply.
           </div>
         ) : (
           <ul className="space-y-2">
             {followUps.map((s, idx) => (
-              <li key={idx} className="flex items-center gap-2 rounded-md border border-slate-200 p-2">
-                <span className="text-xs font-medium text-slate-500">Step {s.step_order}</span>
-                <span className="text-xs text-slate-500">after</span>
+              <li key={idx} className="flex items-center gap-2 rounded-md border border-line-2 p-2">
+                <span className="text-xs font-medium text-ink-faint">Step {s.step_order}</span>
+                <span className="text-xs text-ink-faint">after</span>
                 <input
                   type="number"
                   min={1}
@@ -438,9 +438,9 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
                       prev.map((p, i) => (i === idx ? { ...p, delay_days: v } : p))
                     );
                   }}
-                  className="w-16 rounded-md border border-slate-200 px-2 py-1 text-sm"
+                  className="w-16 rounded-md border border-line-2 px-2 py-1 text-sm"
                 />
-                <span className="text-xs text-slate-500">days using</span>
+                <span className="text-xs text-ink-faint">days using</span>
                 <select
                   value={s.template_id}
                   onChange={(e) => {
@@ -449,7 +449,7 @@ const CampaignForm = ({ onCancel, onCreated, onError }: CampaignFormProps) => {
                       prev.map((p, i) => (i === idx ? { ...p, template_id: v } : p))
                     );
                   }}
-                  className="flex-1 rounded-md border border-slate-200 px-2 py-1 text-sm"
+                  className="flex-1 rounded-md border border-line-2 px-2 py-1 text-sm"
                 >
                   {templates.map((t) => (
                     <option key={t.id} value={t.id}>

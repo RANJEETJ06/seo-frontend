@@ -1,3 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Hanken+Grotesque:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================================================= *
+ *  Signal Console — design tokens
+ *  A dark, instrument-grade theme: layered near-black surfaces,
+ *  hairline borders, one electric-lime signal accent.
+ * ============================================================= */
+:root {
+  --bg: #090a0c;
+  --bg-soft: #0c0e11;
+  --panel: #121519;
+  --panel-2: #171a1f;
+
+  --line: rgba(255, 255, 255, 0.08);
+  --line-2: rgba(255, 255, 255, 0.14);
+
+  --ink: #eceef1;
+  --ink-2: #9aa1ac;
+  --ink-3: #646b76;
+
+  --signal: #caf94c;
+  --signal-press: #b6e635;
+  --signal-soft: rgba(202, 249, 76, 0.12);
+  --signal-glow: rgba(202, 249, 76, 0.4);
+
+  --success: #4ade80;
+  --warn: #f5c451;
+  --danger: #fb7185;
+  --info: #7dd3fc;
+
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: "Hanken Grotesque", ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "cv01", "ss01";
+    /* Atmosphere: faint twin glows + a fine technical grid. */
+    background-image:
+      radial-gradient(
+        820px 460px at 8% -10%,
+        rgba(202, 249, 76, 0.07),
+        transparent 60%
+      ),
+      radial-gradient(
+        680px 560px at 102% -4%,
+        rgba(125, 211, 252, 0.05),
+        transparent 55%
+      ),
+      linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    background-size: auto, auto, 54px 54px, 54px 54px;
+    background-attachment: fixed;
+  }
+
+  /* Grain overlay — adds film texture without flattening the palette. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  h1, h2, h3, h4 {
+    font-family: "Bricolage Grotesque", "Hanken Grotesque", sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: var(--signal);
+    color: #0a0b0d;
+  }
+
+  /* Scrollbars — slim, on-theme. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 99px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.22);
+    background-clip: content-box;
+  }
+}
+
+@layer components {
+  /* Eyebrow / instrument label */
+  .eyebrow {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* Hairline divider with a faint centre highlight */
+  .rule {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--line-2),
+      transparent
+    );
+  }
+
+  /* Focus ring used across interactive elements */
+  .ring-signal:focus-visible {
+    outline: none;
+    border-color: var(--signal);
+    box-shadow: 0 0 0 3px var(--signal-soft);
+  }
+}
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

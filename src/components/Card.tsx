@@ -10,12 +10,15 @@ interface CardProps {
 const Card = ({ title, action, children, className = "" }: CardProps) => {
   return (
     <div
-      className={`rounded-lg border border-slate-200 bg-white shadow-sm ${className}`}
+      className={`group relative overflow-hidden rounded-xl border border-line bg-panel bg-panel-sheen shadow-panel ${className}`}
     >
       {(title || action) && (
-        <div className="flex items-center justify-between border-b border-slate-100 px-5 py-3">
+        <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3.5">
           {title && (
-            <h3 className="text-sm font-semibold text-slate-800">{title}</h3>
+            <h3 className="flex items-center gap-2.5 text-[0.7rem] font-medium uppercase tracking-[0.16em] text-ink-dim font-mono">
+              <span className="h-3 w-px bg-signal" aria-hidden="true" />
+              {title}
+            </h3>
           )}
           {action}
         </div>

@@ -14,37 +14,30 @@ interface FieldProps {
 
 export const Field = ({ label, children, hint, error }: FieldProps) => (
   <label className="block">
-    <span className="mb-1 block text-xs font-medium text-slate-700">
+    <span className="mb-1.5 block text-[0.7rem] font-medium uppercase tracking-[0.12em] text-ink-dim font-mono">
       {label}
     </span>
     {children}
     {hint && !error && (
-      <span className="mt-1 block text-xs text-slate-500">{hint}</span>
+      <span className="mt-1.5 block text-xs text-ink-faint">{hint}</span>
     )}
     {error && (
-      <span className="mt-1 block text-xs text-rose-600">{error}</span>
+      <span className="mt-1.5 block text-xs text-danger">{error}</span>
     )}
   </label>
 );
 
+const inputBase =
+  "ring-signal w-full rounded-lg border border-line bg-bg-soft px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-faint transition-colors hover:border-line-2 focus:bg-panel-2";
+
 export const TextInput = (props: InputHTMLAttributes<HTMLInputElement>) => (
-  <input
-    {...props}
-    className={`w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 ${
-      props.className ?? ""
-    }`}
-  />
+  <input {...props} className={`${inputBase} ${props.className ?? ""}`} />
 );
 
 export const TextArea = (
   props: TextareaHTMLAttributes<HTMLTextAreaElement>
 ) => (
-  <textarea
-    {...props}
-    className={`w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 ${
-      props.className ?? ""
-    }`}
-  />
+  <textarea {...props} className={`${inputBase} ${props.className ?? ""}`} />
 );
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -58,17 +51,26 @@ export const Button = ({
   ...rest
 }: ButtonProps) => {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60";
+    "ring-signal group/btn relative inline-flex select-none items-center justify-center gap-2 overflow-hidden rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-150 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:active:translate-y-0";
   const styles: Record<string, string> = {
-    primary: "bg-indigo-600 text-white hover:bg-indigo-700",
+    primary:
+      "bg-signal text-white shadow-[0_2px_18px_-6px_var(--signal-glow)] hover:bg-signal-press hover:shadow-[0_4px_24px_-6px_var(--signal-glow)]",
     secondary:
-      "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50",
-    ghost: "text-slate-600 hover:bg-slate-100",
-    danger: "bg-rose-600 text-white hover:bg-rose-700",
+      "border border-line-2 bg-white/[0.03] text-ink hover:bg-white/[0.07] hover:border-line-2",
+    ghost: "text-ink-dim hover:bg-white/[0.05] hover:text-ink",
+    danger:
+      "border border-[rgba(251,113,133,0.3)] bg-[rgba(251,113,133,0.12)] text-danger hover:bg-[rgba(251,113,133,0.2)]",
   };
   return (
     <button {...rest} className={`${base} ${styles[variant]} ${className}`}>
-      {children}
+      {/* sheen sweep on hover for the primary action */}
+      {variant === "primary" && (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-0 [transform:translateX(-120%)] group-hover/btn:animate-sheen group-hover/btn:opacity-100"
+        />
+      )}
+      <span className="relative inline-flex items-center gap-2">{children}</span>
     </button>
   );
 };
@@ -80,15 +82,17 @@ interface BadgeProps {
 
 export const Badge = ({ tone = "neutral", children }: BadgeProps) => {
   const tones: Record<string, string> = {
-    success: "bg-emerald-50 text-emerald-700 border-emerald-100",
-    warn: "bg-amber-50 text-amber-700 border-amber-100",
-    danger: "bg-rose-50 text-rose-700 border-rose-100",
-    info: "bg-indigo-50 text-indigo-700 border-indigo-100",
-    neutral: "bg-slate-50 text-slate-600 border-slate-100",
+    success:
+      "bg-[rgba(74,222,128,0.1)] text-success border-[rgba(74,222,128,0.22)]",
+    warn: "bg-[rgba(245,196,81,0.1)] text-warn border-[rgba(245,196,81,0.22)]",
+    danger:
+      "bg-[rgba(251,113,133,0.1)] text-danger border-[rgba(251,113,133,0.22)]",
+    info: "bg-[rgba(125,211,252,0.1)] text-info border-[rgba(125,211,252,0.22)]",
+    neutral: "bg-white/[0.04] text-ink-dim border-line-2",
   };
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${tones[tone]}`}
+      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[0.7rem] font-medium tracking-wide font-mono ${tones[tone]}`}
     >
       {children}
     </span>

@@ -49,8 +49,8 @@ const Reports = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Reports</h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <h1 className="text-2xl font-semibold text-ink">Reports</h1>
+        <p className="mt-1 text-sm text-ink-faint">
           Browse saved SEO reports per project.
         </p>
       </div>
@@ -61,7 +61,7 @@ const Reports = () => {
             <select
               value={projectId}
               onChange={(e) => handleSelectProject(e.target.value)}
-              className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+              className="w-full rounded-md border border-line-2 bg-panel px-3 py-2 text-sm focus:border-signal focus:outline-none focus:ring-2 focus:ring-signal/20"
             >
               <option value="">Select a project…</option>
               {projects.map((p) => (
@@ -76,7 +76,7 @@ const Reports = () => {
 
       {loading && (
         <Card>
-          <div className="py-8 text-center text-sm text-slate-500">
+          <div className="py-8 text-center text-sm text-ink-faint">
             Loading reports…
           </div>
         </Card>
@@ -84,7 +84,7 @@ const Reports = () => {
 
       {error && (
         <Card>
-          <div className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+          <div className="rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
             {error}
           </div>
         </Card>
@@ -93,16 +93,16 @@ const Reports = () => {
       {projectId && !loading && !error && reports.length === 0 && (
         <Card>
           <div className="py-12 text-center">
-            <div className="text-sm font-medium text-slate-700">
+            <div className="text-sm font-medium text-ink-dim">
               No reports yet
             </div>
-            <div className="mt-1 text-xs text-slate-500">
+            <div className="mt-1 text-xs text-ink-faint">
               Run an analysis with this project selected to save a report.
             </div>
             <div className="mt-4">
               <Link
                 to={`/analyze?project=${projectId}`}
-                className="text-sm font-medium text-indigo-600 hover:underline"
+                className="text-sm font-medium text-signal hover:underline"
               >
                 Run analysis →
               </Link>
@@ -115,7 +115,7 @@ const Reports = () => {
         <Card title={`Reports (${reports.length})`}>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="text-left text-xs uppercase tracking-wide text-slate-500">
+              <thead className="text-left text-xs uppercase tracking-wide text-ink-faint">
                 <tr>
                   <th className="px-2 py-2">URL</th>
                   <th className="px-2 py-2">Score</th>
@@ -126,8 +126,8 @@ const Reports = () => {
               </thead>
               <tbody>
                 {reports.map((r) => (
-                  <tr key={r.id} className="border-t border-slate-100">
-                    <td className="max-w-md truncate px-2 py-2 font-medium text-slate-700">
+                  <tr key={r.id} className="border-t border-line">
+                    <td className="max-w-md truncate px-2 py-2 font-medium text-ink-dim">
                       {r.url}
                     </td>
                     <td className="px-2 py-2">
@@ -138,13 +138,13 @@ const Reports = () => {
                         {r.status}
                       </Badge>
                     </td>
-                    <td className="px-2 py-2 text-slate-600">
+                    <td className="px-2 py-2 text-ink-dim">
                       {new Date(r.created_at).toLocaleString()}
                     </td>
                     <td className="px-2 py-2 text-right">
                       <button
                         onClick={() => setSelected(r)}
-                        className="text-xs font-medium text-indigo-600 hover:underline"
+                        className="text-xs font-medium text-signal hover:underline"
                       >
                         View →
                       </button>
@@ -190,13 +190,13 @@ const ReportDetail = ({
         action={
           <button
             onClick={onClose}
-            className="text-xs font-medium text-slate-500 hover:text-slate-700"
+            className="text-xs font-medium text-ink-faint hover:text-ink-dim"
           >
             ← Back to list
           </button>
         }
       >
-        <div className="mb-4 break-all text-sm font-medium text-slate-800">
+        <div className="mb-4 break-all text-sm font-medium text-ink">
           {report.url}
         </div>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-6">
@@ -207,7 +207,7 @@ const ReportDetail = ({
           <ScoreGauge score={report.content_score} label="Content" />
           <ScoreGauge score={report.technical_score} label="Technical" />
         </div>
-        <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-500">
+        <div className="mt-4 flex flex-wrap gap-3 text-xs text-ink-faint">
           <span>
             Created: {new Date(report.created_at).toLocaleString()}
           </span>
@@ -221,7 +221,7 @@ const ReportDetail = ({
 
       {report.ai_summary && (
         <Card title="AI summary">
-          <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
+          <p className="whitespace-pre-wrap text-sm leading-relaxed text-ink-dim">
             {report.ai_summary}
           </p>
         </Card>
@@ -231,7 +231,7 @@ const ReportDetail = ({
         <div className="grid gap-6 lg:grid-cols-2">
           {issues.length > 0 && (
             <Card title={`Issues (${issues.length})`}>
-              <ul className="space-y-1 text-sm text-rose-700">
+              <ul className="space-y-1 text-sm text-danger">
                 {issues.map((it, i) => (
                   <li key={i}>• {it}</li>
                 ))}
@@ -240,10 +240,10 @@ const ReportDetail = ({
           )}
           {recs.length > 0 && (
             <Card title={`Recommendations (${recs.length})`}>
-              <ul className="space-y-2 text-sm text-slate-700">
+              <ul className="space-y-2 text-sm text-ink-dim">
                 {recs.map((r, i) => (
                   <li key={i} className="flex gap-2">
-                    <span className="text-emerald-600">→</span>
+                    <span className="text-success">→</span>
                     <span>{r}</span>
                   </li>
                 ))}

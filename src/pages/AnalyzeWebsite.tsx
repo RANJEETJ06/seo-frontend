@@ -53,10 +53,10 @@ const AnalyzeWebsite = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">
+        <h1 className="text-2xl font-semibold text-ink">
           Analyze Website
         </h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-ink-faint">
           Submit a URL and a background worker will crawl, score, and generate
           AI recommendations.
         </p>
@@ -89,7 +89,7 @@ const AnalyzeWebsite = () => {
               value={projectId}
               onChange={(e) => setProjectId(e.target.value)}
               disabled={poll.loading}
-              className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 disabled:opacity-60"
+              className="w-full rounded-md border border-line-2 bg-panel px-3 py-2 text-sm focus:border-signal focus:outline-none focus:ring-2 focus:ring-signal/20 disabled:opacity-60"
             >
               <option value="">— Don't save —</option>
               {projects.map((p) => (
@@ -100,13 +100,13 @@ const AnalyzeWebsite = () => {
             </select>
           </Field>
           <div className="md:col-span-2 flex items-center justify-between">
-            <label className="flex items-center gap-2 text-sm text-slate-600">
+            <label className="flex items-center gap-2 text-sm text-ink-dim">
               <input
                 type="checkbox"
                 checked={deep}
                 onChange={(e) => setDeep(e.target.checked)}
                 disabled={poll.loading}
-                className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                className="rounded border-line-2 text-signal focus:ring-signal"
               />
               Deep analysis (crawls additional pages)
             </label>
@@ -130,7 +130,7 @@ const AnalyzeWebsite = () => {
             </div>
           </div>
           {submitError && (
-            <div className="md:col-span-2 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            <div className="md:col-span-2 rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
               {submitError}
             </div>
           )}
@@ -165,10 +165,10 @@ const TaskProgressCard = ({
   if (error) {
     return (
       <Card title="Analysis failed">
-        <div className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">
+        <div className="rounded-md bg-[rgba(251,113,133,0.1)] px-3 py-2 text-sm text-danger">
           {error}
         </div>
-        <div className="mt-2 text-xs text-slate-400">Task ID: {taskId}</div>
+        <div className="mt-2 text-xs text-ink-faint">Task ID: {taskId}</div>
       </Card>
     );
   }
@@ -180,8 +180,8 @@ const TaskProgressCard = ({
       action={<Badge tone="info">{status ?? "PENDING"}</Badge>}
     >
       <div className="flex items-center gap-3">
-        <div className="h-4 w-4 animate-spin rounded-full border-2 border-indigo-500 border-t-transparent" />
-        <div className="text-sm text-slate-600">
+        <div className="h-4 w-4 animate-spin rounded-full border-2 border-signal border-t-transparent" />
+        <div className="text-sm text-ink-dim">
           {stage
             ? `Stage: ${stage}…`
             : status === "PENDING"
@@ -189,7 +189,7 @@ const TaskProgressCard = ({
               : "Working…"}
         </div>
       </div>
-      <div className="mt-2 text-xs text-slate-400">Task ID: {taskId}</div>
+      <div className="mt-2 text-xs text-ink-faint">Task ID: {taskId}</div>
     </Card>
   );
 };
@@ -210,7 +210,7 @@ const AnalysisResultView = ({ result }: { result: SEOAnalysisResult }) => {
 
       {result.ai_summary && (
         <Card title="AI summary">
-          <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
+          <p className="whitespace-pre-wrap text-sm leading-relaxed text-ink-dim">
             {result.ai_summary}
           </p>
         </Card>
@@ -234,7 +234,7 @@ const AnalysisResultView = ({ result }: { result: SEOAnalysisResult }) => {
           </dl>
           {result.meta.issues.length > 0 && (
             <div className="mt-4 space-y-1">
-              <div className="text-xs font-medium text-slate-700">Issues</div>
+              <div className="text-xs font-medium text-ink-dim">Issues</div>
               <IssueList items={result.meta.issues} />
             </div>
           )}
@@ -248,8 +248,8 @@ const AnalysisResultView = ({ result }: { result: SEOAnalysisResult }) => {
           </dl>
           {result.headings.h1.length > 0 && (
             <div className="mt-4">
-              <div className="text-xs font-medium text-slate-700">H1 tags</div>
-              <ul className="mt-1 space-y-1 text-sm text-slate-600">
+              <div className="text-xs font-medium text-ink-dim">H1 tags</div>
+              <ul className="mt-1 space-y-1 text-sm text-ink-dim">
                 {result.headings.h1.map((h, i) => (
                   <li key={i} className="truncate">• {h}</li>
                 ))}
@@ -258,7 +258,7 @@ const AnalysisResultView = ({ result }: { result: SEOAnalysisResult }) => {
           )}
           {result.headings.issues.length > 0 && (
             <div className="mt-4 space-y-1">
-              <div className="text-xs font-medium text-slate-700">Issues</div>
+              <div className="text-xs font-medium text-ink-dim">Issues</div>
               <IssueList items={result.headings.issues} />
             </div>
           )}
@@ -314,7 +314,7 @@ const AnalysisResultView = ({ result }: { result: SEOAnalysisResult }) => {
         <Card title="Top keywords">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="text-left text-xs uppercase tracking-wide text-slate-500">
+              <thead className="text-left text-xs uppercase tracking-wide text-ink-faint">
                 <tr>
                   <th className="px-2 py-2">Term</th>
                   <th className="px-2 py-2">Frequency</th>
@@ -323,12 +323,12 @@ const AnalysisResultView = ({ result }: { result: SEOAnalysisResult }) => {
               </thead>
               <tbody>
                 {result.keywords.slice(0, 20).map((k, i) => (
-                  <tr key={i} className="border-t border-slate-100">
-                    <td className="px-2 py-2 font-medium text-slate-700">
+                  <tr key={i} className="border-t border-line">
+                    <td className="px-2 py-2 font-medium text-ink-dim">
                       {k.term}
                     </td>
-                    <td className="px-2 py-2 text-slate-600">{k.frequency}</td>
-                    <td className="px-2 py-2 text-slate-600">
+                    <td className="px-2 py-2 text-ink-dim">{k.frequency}</td>
+                    <td className="px-2 py-2 text-ink-dim">
                       {(k.density * 100).toFixed(2)}%
                     </td>
                   </tr>
@@ -348,10 +348,10 @@ const AnalysisResultView = ({ result }: { result: SEOAnalysisResult }) => {
           )}
           {result.recommendations.length > 0 && (
             <Card title={`Recommendations (${result.recommendations.length})`}>
-              <ul className="space-y-2 text-sm text-slate-700">
+              <ul className="space-y-2 text-sm text-ink-dim">
                 {result.recommendations.map((r, i) => (
                   <li key={i} className="flex gap-2">
-                    <span className="text-emerald-600">→</span>
+                    <span className="text-success">→</span>
                     <span>{r}</span>
                   </li>
                 ))}
@@ -372,10 +372,10 @@ const Row = ({
   value: string | number | null | undefined;
 }) => (
   <div className="flex items-start justify-between gap-3">
-    <dt className="shrink-0 text-xs font-medium text-slate-500">{label}</dt>
-    <dd className="truncate text-right text-slate-800">
+    <dt className="shrink-0 text-xs font-medium text-ink-faint">{label}</dt>
+    <dd className="truncate text-right text-ink">
       {value === null || value === undefined || value === "" ? (
-        <span className="text-slate-400">—</span>
+        <span className="text-ink-faint">—</span>
       ) : (
         value
       )}
@@ -384,8 +384,8 @@ const Row = ({
 );
 
 const TechItem = ({ label, ok }: { label: string; ok: boolean }) => (
-  <div className="flex items-center justify-between rounded-md border border-slate-100 px-3 py-2">
-    <span className="text-slate-700">{label}</span>
+  <div className="flex items-center justify-between rounded-md border border-line px-3 py-2">
+    <span className="text-ink-dim">{label}</span>
     <Badge tone={ok ? "success" : "danger"}>{ok ? "Yes" : "No"}</Badge>
   </div>
 );
@@ -401,7 +401,7 @@ const IssueList = ({
     {items.map((it, i) => (
       <li
         key={i}
-        className={`flex gap-2 ${tone === "danger" ? "text-rose-700" : "text-amber-700"}`}
+        className={`flex gap-2 ${tone === "danger" ? "text-danger" : "text-warn"}`}
       >
         <span>•</span>
         <span>{it}</span>

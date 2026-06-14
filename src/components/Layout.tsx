@@ -22,14 +22,14 @@ const Layout = () => {
   }, [sidebarOpen]);
 
   return (
-    <div className="flex min-h-screen bg-slate-50 text-slate-800">
+    <div className="relative z-10 flex min-h-screen bg-transparent text-ink">
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Mobile top bar */}
-        <header className="sticky top-0 z-20 flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 lg:hidden">
+        <header className="sticky top-0 z-20 flex items-center justify-between border-b border-line bg-bg-soft/80 px-4 py-3 backdrop-blur-xl lg:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="rounded-md p-2 text-slate-700 hover:bg-slate-100"
+            className="ring-signal rounded-md p-2 text-ink-dim hover:bg-white/5 hover:text-ink"
             aria-label="Open menu"
           >
             <svg
@@ -39,7 +39,7 @@ const Layout = () => {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="1.7"
               strokeLinecap="round"
               strokeLinejoin="round"
             >
@@ -48,13 +48,19 @@ const Layout = () => {
               <line x1="3" y1="18" x2="21" y2="18" />
             </svg>
           </button>
-          <div className="text-sm font-semibold text-slate-900">
-            AI SEO Platform
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-signal shadow-glow-soft" />
+            <span className="font-display text-sm font-bold text-ink">
+              AI&nbsp;SEO
+            </span>
           </div>
           <div className="w-9" />
         </header>
         <main className="flex-1 overflow-auto">
-          <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-10">
+          <div
+            key={location.pathname}
+            className="mx-auto max-w-7xl animate-fade-in p-4 sm:p-6 lg:p-10"
+          >
             <Outlet />
           </div>
         </main>
