@@ -18,7 +18,45 @@ import type {
   QueueListResponse,
   RAGQuery,
   RAGResponse,
+  TaskStatusResponse,
 } from "../types";
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/**
+ * POST to an async (Celery-backed) endpoint that returns a task id, then poll
+ * /tasks/{id} until it finishes and resolve with the result. This keeps the
+ * public method signatures returning the final result, so callers don't need
+ * to know the work now runs in the background. Mirrors useTaskPolling's logic.
+ */
+async function submitAndPoll<T>(
+  url: string,
+  body: unknown,
+  opts: {
+    params?: Record<string, unknown>;
+    intervalMs?: number;
+    maxTicks?: number;
+  } = {}
+): Promise<T> {
+  const { params, intervalMs = 2000, maxTicks = 150 } = opts;
+  const { data: submit } = await apiClient.post<{
+    task_id: string;
+    status: string;
+  }>(url, body, params ? { params } : undefined);
+
+  await sleep(500); // small head-start so the task is enqueued before first poll
+  for (let tick = 0; tick < maxTicks; tick++) {
+    const { data: status } = await apiClient.get<TaskStatusResponse<T>>(
+      `/tasks/${submit.task_id}`
+    );
+    if (status.status === "SUCCESS") return status.result as T;
+    if (status.status === "FAILURE" || status.status === "REVOKED") {
+      throw new Error(status.error || "Task failed");
+    }
+    await sleep(intervalMs);
+  }
+  throw new Error("Timed out waiting for task to complete.");
+}
 
 export const aiApi = {
   async aiVisibility(
@@ -48,48 +86,38 @@ export const aiApi = {
     );
     return data;
   },
+  // These run in the background (crawl + LLM heavy): submit → poll → result.
   async backlinks(
     payload: BacklinkAgentRequest
   ): Promise<BacklinkAgentResponse> {
-    const { data } = await apiClient.post<BacklinkAgentResponse>(
-      "/ai/backlinks",
-      payload
-    );
-    return data;
+    return submitAndPoll<BacklinkAgentResponse>("/ai/backlinks", payload);
   },
   async internalExport(
     payload: InternalExportRequest
   ): Promise<InternalExportResponse> {
-    const { data } = await apiClient.post<InternalExportResponse>(
+    return submitAndPoll<InternalExportResponse>(
       "/ai/backlinks/internal-export",
       payload
     );
-    return data;
   },
   async discoverProspects(
     payload: ProspectDiscoveryRequest
   ): Promise<BacklinkAgentResponse> {
-    const { data } = await apiClient.post<BacklinkAgentResponse>(
+    return submitAndPoll<BacklinkAgentResponse>(
       "/ai/backlinks/discover",
       payload
     );
-    return data;
   },
   async brokenLinks(
     payload: BrokenLinkScanRequest
   ): Promise<BrokenLinkScanResponse> {
-    const { data } = await apiClient.post<BrokenLinkScanResponse>(
+    return submitAndPoll<BrokenLinkScanResponse>(
       "/ai/backlinks/broken-links",
       payload
     );
-    return data;
   },
   async guestPost(payload: GuestPostRequest): Promise<GuestPostResponse> {
-    const { data } = await apiClient.post<GuestPostResponse>(
-      "/ai/backlinks/guest-post",
-      payload
-    );
-    return data;
+    return submitAndPoll<GuestPostResponse>("/ai/backlinks/guest-post", payload);
   },
   async directories(
     payload: DirectoryQueueRequest
@@ -122,10 +150,11 @@ export const aiApi = {
     return data;
   },
   async ragIngest(url: string): Promise<{ url: string; chunks: number }> {
-    const { data } = await apiClient.post("/ai/rag/ingest", null, {
-      params: { url },
-    });
-    return data;
+    return submitAndPoll<{ url: string; chunks: number }>(
+      "/ai/rag/ingest",
+      null,
+      { params: { url } }
+    );
   },
   async ragAsk(payload: RAGQuery): Promise<RAGResponse> {
     const { data } = await apiClient.post<RAGResponse>("/ai/rag/ask", payload);
