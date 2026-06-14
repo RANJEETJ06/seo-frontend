@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthStore } from "./store/auth";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import HealthGate from "./components/HealthGate";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -25,28 +26,30 @@ function App() {
   }, [loadCurrentUser]);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/oauth/google/callback" element={<OAuthGoogleCallback />} />
-        <Route element={<ProtectedRoute />}>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/analyze" element={<AnalyzeWebsite />} />
-            <Route path="/keywords" element={<Keywords />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/crawler" element={<Crawler />} />
-            <Route path="/competitor" element={<Competitor />} />
-            <Route path="/ai-tools" element={<AITools />} />
-            <Route path="/tech-audit" element={<TechAudit />} />
-            <Route path="/ai-visibility" element={<AIVisibility />} />
-            <Route path="/learn" element={<Learn />} />
-            <Route path="/settings" element={<Settings />} />
+    <HealthGate>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/oauth/google/callback" element={<OAuthGoogleCallback />} />
+          <Route element={<ProtectedRoute />}>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/analyze" element={<AnalyzeWebsite />} />
+              <Route path="/keywords" element={<Keywords />} />
+              <Route path="/reports" element={<Reports />} />
+              <Route path="/crawler" element={<Crawler />} />
+              <Route path="/competitor" element={<Competitor />} />
+              <Route path="/ai-tools" element={<AITools />} />
+              <Route path="/tech-audit" element={<TechAudit />} />
+              <Route path="/ai-visibility" element={<AIVisibility />} />
+              <Route path="/learn" element={<Learn />} />
+              <Route path="/settings" element={<Settings />} />
+            </Route>
           </Route>
-        </Route>
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </HealthGate>
   );
 }
 

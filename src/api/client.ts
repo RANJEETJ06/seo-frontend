@@ -11,6 +11,35 @@ export const apiClient = axios.create({
   timeout: 60000,
 });
 
+// The health endpoint lives at the server root (e.g. http://localhost:8000/health),
+// not under the /api/v1 prefix — derive it from the API base's origin.
+export const healthUrl = (() => {
+  try {
+    return `${new URL(baseURL).origin}/health`;
+  } catch {
+    return "http://localhost:8000/health";
+  }
+})();
+
+/**
+ * Probe the backend's /health endpoint. Resolves true when the server is
+ * reachable and reports a healthy status, false otherwise. Never throws —
+ * a rejected request (network error, timeout, 5xx) means "down".
+ */
+export async function checkHealth(): Promise<boolean> {
+  try {
+    const res = await axios.get(healthUrl, { timeout: 5000 });
+    const status = res.data?.status;
+    // Accept the documented {"status":"ok"} plus common variants ("up").
+    if (typeof status === "string") {
+      return ["ok", "up", "healthy"].includes(status.toLowerCase());
+    }
+    return res.status >= 200 && res.status < 300;
+  } catch {
+    return false;
+  }
+}
+
 const TOKEN_KEY = "seo_access_token";
 
 export const tokenStorage = {
