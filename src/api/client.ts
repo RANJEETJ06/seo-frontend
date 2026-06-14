@@ -47,7 +47,33 @@ export function apiErrorMessage(err: unknown, fallback = "Request failed"): stri
     if (Array.isArray(detail) && detail.length) {
       return detail.map((d: { msg?: string }) => d.msg ?? "").join("; ");
     }
+    // Structured error from the outreach surface: { code, message, detail }.
+    if (detail && typeof detail === "object") {
+      const obj = detail as { message?: string; code?: string; detail?: string };
+      if (obj.message) {
+        const base =
+          obj.code && obj.code !== "gmail_error"
+            ? `${obj.message} (${obj.code})`
+            : obj.message;
+        // `detail` carries the raw provider reason (e.g. Google's
+        // error_description) — append it when it adds information.
+        return obj.detail && obj.detail !== obj.message
+          ? `${base} — ${obj.detail}`
+          : base;
+      }
+    }
     return err.message || fallback;
   }
   return fallback;
+}
+
+/** Pull a stable error code out of an axios error, if present. */
+export function apiErrorCode(err: unknown): string | null {
+  if (axios.isAxiosError(err)) {
+    const detail = err.response?.data?.detail;
+    if (detail && typeof detail === "object" && "code" in detail) {
+      return (detail as { code?: string }).code ?? null;
+    }
+  }
+  return null;
 }

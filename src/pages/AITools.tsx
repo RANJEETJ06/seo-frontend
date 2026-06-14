@@ -9,6 +9,9 @@ import {
   Button,
   Badge,
 } from "../components/Field";
+import OutreachDashboard from "../components/outreach/OutreachDashboard";
+import TemplatesPanel from "../components/outreach/TemplatesPanel";
+import CampaignsPanel from "../components/outreach/CampaignsPanel";
 import type {
   AIRecommendationResponse,
   BacklinkAgentResponse,
@@ -20,7 +23,7 @@ import type {
   RAGResponse,
 } from "../types";
 
-type Tab = "recommend" | "backlinks" | "builder" | "rag";
+type Tab = "recommend" | "backlinks" | "builder" | "rag" | "outreach";
 
 const AITools = () => {
   const [tab, setTab] = useState<Tab>("recommend");
@@ -41,6 +44,7 @@ const AITools = () => {
             { id: "recommend", label: "Recommendations" },
             { id: "backlinks", label: "Backlink Agent" },
             { id: "builder", label: "Link Builder" },
+            { id: "outreach", label: "Outreach" },
             { id: "rag", label: "RAG Assistant" },
           ] as { id: Tab; label: string }[]
         ).map((t) => (
@@ -61,7 +65,46 @@ const AITools = () => {
       {tab === "recommend" && <RecommendPanel />}
       {tab === "backlinks" && <BacklinkPanel />}
       {tab === "builder" && <LinkBuilderPanel />}
+      {tab === "outreach" && <OutreachHub />}
       {tab === "rag" && <RagPanel />}
+    </div>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// Outreach Hub — sub-tabs for dashboard, templates, campaigns
+// ---------------------------------------------------------------------------
+
+type OutreachTab = "dashboard" | "templates" | "campaigns";
+
+const OutreachHub = () => {
+  const [tab, setTab] = useState<OutreachTab>("dashboard");
+  return (
+    <div className="space-y-4">
+      <div className="inline-flex rounded-md border border-slate-200 bg-white p-1">
+        {(
+          [
+            { id: "dashboard", label: "Dashboard" },
+            { id: "campaigns", label: "Campaigns" },
+            { id: "templates", label: "Templates" },
+          ] as { id: OutreachTab; label: string }[]
+        ).map((t) => (
+          <button
+            key={t.id}
+            onClick={() => setTab(t.id)}
+            className={`rounded px-3 py-1 text-xs font-medium transition ${
+              tab === t.id
+                ? "bg-emerald-600 text-white"
+                : "text-slate-600 hover:bg-slate-100"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+      {tab === "dashboard" && <OutreachDashboard />}
+      {tab === "campaigns" && <CampaignsPanel />}
+      {tab === "templates" && <TemplatesPanel />}
     </div>
   );
 };

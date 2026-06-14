@@ -15,6 +15,7 @@ import TechAudit from "./pages/TechAudit";
 import AIVisibility from "./pages/AIVisibility";
 import Learn from "./pages/Learn";
 import Settings from "./pages/Settings";
+import OAuthGoogleCallback from "./pages/OAuthGoogleCallback";
 
 function App() {
   const loadCurrentUser = useAuthStore((s) => s.loadCurrentUser);
@@ -27,6 +28,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/oauth/google/callback" element={<OAuthGoogleCallback />} />
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
             <Route path="/" element={<Dashboard />} />

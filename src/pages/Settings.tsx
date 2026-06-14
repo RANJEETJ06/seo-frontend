@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { useAuthStore } from "../store/auth";
 import Card from "../components/Card";
 import { Badge } from "../components/Field";
+import EmailAccountsPanel from "../components/outreach/EmailAccountsPanel";
 
 const Settings = () => {
   const user = useAuthStore((s) => s.user);
@@ -13,7 +14,7 @@ const Settings = () => {
       <div>
         <h1 className="text-2xl font-semibold text-slate-900">Settings</h1>
         <p className="mt-1 text-sm text-slate-500">
-          Account and platform configuration.
+          Account, integrations, and outreach configuration.
         </p>
       </div>
 
@@ -45,18 +46,7 @@ const Settings = () => {
         </dl>
       </Card>
 
-      {/* <Card title="API">
-        <dl className="space-y-3 text-sm">
-          <Row
-            label="Base URL"
-            value={
-              (import.meta.env.VITE_API_BASE_URL as string | undefined) ??
-              "http://localhost:8000/api/v1"
-            }
-          />
-          <Row label="Auth" value="JWT bearer token (localStorage)" />
-        </dl>
-      </Card> */}
+      <EmailAccountsPanel />
     </div>
   );
 };

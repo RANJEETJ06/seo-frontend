@@ -532,5 +532,189 @@ export interface TaskStatusResponse<T = Record<string, unknown>> {
 }
 
 export interface ApiError {
-  detail: string | { msg: string; loc: (string | number)[] }[];
+  detail:
+    | string
+    | { msg: string; loc: (string | number)[] }[]
+    | { code: string; message: string; detail?: string | null };
+}
+
+// ----- Outreach / Gmail ----------------------------------------------------
+
+export interface SendAsIdentity {
+  email: string;
+  display_name?: string | null;
+  is_default: boolean;
+  verification_status?: string | null;
+}
+
+export interface EmailAccount {
+  id: number;
+  provider: string;
+  email_address: string;
+  display_name?: string | null;
+  send_as: SendAsIdentity[];
+  is_active: boolean;
+  daily_send_cap: number;
+  sends_today: number;
+  last_used_at?: string | null;
+  last_error?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface EmailAccountUpdate {
+  daily_send_cap?: number;
+  is_active?: boolean;
+}
+
+export interface GoogleAuthUrl {
+  auth_url: string;
+  state: string;
+}
+
+export interface GoogleOAuthCallbackPayload {
+  code: string;
+  state: string;
+  redirect_uri: string;
+}
+
+export interface EmailTemplate {
+  id: number;
+  name: string;
+  subject: string;
+  body_text: string;
+  body_html?: string | null;
+  category: string;
+  is_default: boolean;
+  variables: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface EmailTemplateCreate {
+  name: string;
+  subject: string;
+  body_text: string;
+  body_html?: string;
+  category?: string;
+  is_default?: boolean;
+}
+
+export interface EmailTemplateUpdate {
+  name?: string;
+  subject?: string;
+  body_text?: string;
+  body_html?: string;
+  category?: string;
+  is_default?: boolean;
+}
+
+export interface FollowUpStep {
+  step_order: number;
+  delay_days: number;
+  template_id: number;
+}
+
+export interface CampaignCreate {
+  name: string;
+  email_account_id: number;
+  template_id: number;
+  from_email?: string;
+  track_opens?: boolean;
+  daily_cap_override?: number;
+  prospect_ids?: number[];
+  follow_ups?: FollowUpStep[];
+}
+
+export interface CampaignUpdate {
+  name?: string;
+  status?: "draft" | "sending" | "paused" | "completed";
+  track_opens?: boolean;
+  daily_cap_override?: number;
+}
+
+export interface Campaign {
+  id: number;
+  name: string;
+  email_account_id: number;
+  template_id?: number | null;
+  from_email?: string | null;
+  status: "draft" | "sending" | "paused" | "completed";
+  track_opens: boolean;
+  sent_count: number;
+  opened_count: number;
+  replied_count: number;
+  failed_count: number;
+  daily_cap_override?: number | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CampaignSendResult {
+  prospect_id: number;
+  status: string;
+  error?: string | null;
+  log_id?: number | null;
+}
+
+export interface CampaignSendResponse {
+  campaign_id: number;
+  results: CampaignSendResult[];
+  sent: number;
+  failed: number;
+  skipped: number;
+  quota_remaining: number;
+}
+
+export interface OutreachAccountStats {
+  email_account_id: number;
+  email_address: string;
+  sent_today: number;
+  daily_cap: number;
+  last_used_at?: string | null;
+}
+
+export interface RecentSendEntry {
+  id: number;
+  recipient: string;
+  subject: string;
+  status: string;
+  error_code?: string | null;
+  created_at: string;
+  opened_at?: string | null;
+  replied_at?: string | null;
+}
+
+export interface OutreachDashboard {
+  sent_total: number;
+  sent_today: number;
+  opened_total: number;
+  replied_total: number;
+  failed_total: number;
+  pending_follow_ups: number;
+  accounts: OutreachAccountStats[];
+  recent_sends: RecentSendEntry[];
+}
+
+export interface OutreachSendRequest {
+  email_account_id: number;
+  recipient: string;
+  from_email?: string;
+  subject?: string;
+  body_html?: string;
+  track_opens?: boolean;
+}
+
+export interface OutreachSendResponse {
+  status: string;
+  message_id?: string | null;
+  log_id: number;
+}
+
+export interface BulkOutreachSendRequest {
+  email_account_id: number;
+  prospect_ids: number[];
+  from_email?: string;
+  template_id?: number;
+  track_opens?: boolean;
 }
