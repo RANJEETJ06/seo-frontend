@@ -54,7 +54,7 @@ const AITools = () => {
             className={`rounded px-4 py-1.5 text-xs font-medium transition ${
               tab === t.id
                 ? "bg-signal text-[#363a41]"
-                : "text-ink-dim hover:bg-white/[0.06]"
+                : "text-ink-dim hover:bg-panel-2"
             }`}
           >
             {t.label}
@@ -94,8 +94,8 @@ const OutreachHub = () => {
             onClick={() => setTab(t.id)}
             className={`rounded px-3 py-1 text-xs font-medium transition ${
               tab === t.id
-                ? "bg-emerald-600 text-white"
-                : "text-ink-dim hover:bg-white/[0.06]"
+                ? "bg-signal text-white"
+                : "text-ink-dim hover:bg-panel-2"
             }`}
           >
             {t.label}
@@ -148,7 +148,7 @@ const RecommendPanel = () => {
               className={`rounded px-3 py-1 text-xs font-medium transition ${
                 mode === m
                   ? "bg-signal text-[#35383e]"
-                  : "text-ink-dim hover:bg-white/[0.06]"
+                  : "text-ink-dim hover:bg-panel-2"
               }`}
             >
               {m === "url" ? "From URL" : "From content"}
@@ -700,7 +700,7 @@ const LinkBuilderPanel = () => {
             className={`rounded px-3 py-1.5 text-xs font-medium transition ${
               sub === t.id
                 ? "bg-signal text-[#2f3239]"
-                : "text-ink-dim hover:bg-white/[0.06]"
+                : "text-ink-dim hover:bg-panel-2"
             }`}
           >
             {t.label}
@@ -1338,7 +1338,7 @@ const QueueTab = () => {
               className={`rounded px-2 py-1 text-xs font-medium ${
                 scope === s.id
                   ? "bg-signal text-[#0a0b0d]"
-                  : "text-ink-dim hover:bg-white/[0.06]"
+                  : "text-ink-dim hover:bg-panel-2"
               }`}
             >
               {s.label}
@@ -1356,7 +1356,7 @@ const QueueTab = () => {
               className={`rounded px-2 py-1 text-xs font-medium ${
                 kind === k
                   ? "bg-signal text-[#0a0b0d]"
-                  : "text-ink-dim hover:bg-white/[0.06]"
+                  : "text-ink-dim hover:bg-panel-2"
               }`}
             >
               {k}

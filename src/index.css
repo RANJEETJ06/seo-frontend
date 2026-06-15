@@ -1,38 +1,42 @@
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Hanken+Grotesque:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Hanken+Grotesque:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ============================================================= *
- *  Signal Console — design tokens
- *  A dark, instrument-grade theme: layered near-black surfaces,
- *  hairline borders, one electric-lime signal accent.
+ *  Smooth Suite — design tokens
+ *  An airy, light theme: soft mist surfaces, hairline borders,
+ *  spring-green pop over a deep evergreen ink. Calm, not clinical.
  * ============================================================= */
 :root {
-  --bg: #090a0c;
-  --bg-soft: #0c0e11;
-  --panel: #121519;
-  --panel-2: #171a1f;
+  --bg: #f6faf8;
+  --bg-soft: #ffffff;
+  --panel: #ffffff;
+  --panel-2: #f1f5f3;
 
-  --line: rgba(255, 255, 255, 0.08);
-  --line-2: rgba(255, 255, 255, 0.14);
+  --line: rgba(1, 48, 43, 0.1);
+  --line-2: rgba(1, 48, 43, 0.16);
 
-  --ink: #eceef1;
-  --ink-2: #9aa1ac;
-  --ink-3: #646b76;
+  --ink: #00253a;
+  --ink-2: #51606a;
+  --ink-3: #8a979e;
 
-  --signal: #caf94c;
-  --signal-press: #b6e635;
-  --signal-soft: rgba(202, 249, 76, 0.12);
-  --signal-glow: rgba(202, 249, 76, 0.4);
+  /* Forest green — the readable accent (text, active states, links). */
+  --signal: #00684a;
+  --signal-press: #00513a;
+  /* Spring green — the brand pop (buttons, gauges, gradients, glows). */
+  --signal-bright: #00ed64;
+  --signal-soft: rgba(0, 104, 74, 0.1);
+  --signal-glow: rgba(0, 237, 100, 0.45);
+  --signal-ink: #00150f;
 
-  --success: #4ade80;
-  --warn: #f5c451;
-  --danger: #fb7185;
-  --info: #7dd3fc;
+  --success: #00875a;
+  --warn: #b25f00;
+  --danger: #d4264e;
+  --info: #0a6fb5;
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 @layer base {
@@ -50,75 +54,61 @@
     background-color: var(--bg);
     color: var(--ink);
     font-family: "Hanken Grotesque", ui-sans-serif, system-ui, sans-serif;
-    font-feature-settings: "cv01", "ss01";
-    /* Atmosphere: faint twin glows + a fine technical grid. */
+    /* Atmosphere: two faint green washes drifting from the top corners. */
     background-image:
       radial-gradient(
-        820px 460px at 8% -10%,
-        rgba(202, 249, 76, 0.07),
+        920px 540px at 100% -8%,
+        rgba(0, 237, 100, 0.08),
         transparent 60%
       ),
       radial-gradient(
-        680px 560px at 102% -4%,
-        rgba(125, 211, 252, 0.05),
-        transparent 55%
-      ),
-      linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-    background-size: auto, auto, 54px 54px, 54px 54px;
+        780px 540px at -6% 2%,
+        rgba(0, 104, 74, 0.05),
+        transparent 58%
+      );
     background-attachment: fixed;
   }
 
-  /* Grain overlay — adds film texture without flattening the palette. */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-
   h1, h2, h3, h4 {
-    font-family: "Bricolage Grotesque", "Hanken Grotesque", sans-serif;
+    font-family: "Familjen Grotesk", "Hanken Grotesque", sans-serif;
     letter-spacing: -0.02em;
   }
 
   ::selection {
-    background: var(--signal);
-    color: #0a0b0d;
+    background: var(--signal-bright);
+    color: var(--signal-ink);
   }
 
   /* Scrollbars — slim, on-theme. */
   * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+    scrollbar-color: rgba(1, 48, 43, 0.18) transparent;
   }
   *::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
   *::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(1, 48, 43, 0.16);
     border-radius: 99px;
     border: 2px solid transparent;
     background-clip: content-box;
   }
   *::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.22);
+    background: rgba(1, 48, 43, 0.28);
     background-clip: content-box;
   }
 }
 
 @layer components {
-  /* Eyebrow / instrument label */
+  /* Eyebrow / section label — smooth sans, not a console readout. */
   .eyebrow {
-    font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: 0.66rem;
-    letter-spacing: 0.18em;
+    font-family: "Familjen Grotesk", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--ink-3);
+    color: var(--signal);
   }
 
   /* Hairline divider with a faint centre highlight */

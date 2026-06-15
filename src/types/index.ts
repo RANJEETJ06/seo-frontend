@@ -13,6 +13,57 @@ export interface Token {
   access_token: string;
   token_type: string;
   expires_in_minutes: number;
+  // The organization this token is scoped to (the active tenant). Returned by
+  // login / register / switch-org so the client can track the active workspace.
+  organization_id?: number | null;
+}
+
+// Organizations (multi-tenant). Resources belong to an org; a user accesses
+// them through a Membership carrying one of these roles.
+export type OrgRole = "owner" | "admin" | "member";
+
+/** An org plus the caller's role in it — used for the org switcher. */
+export interface OrganizationSummary {
+  id: number;
+  name: string;
+  is_personal: boolean;
+  role: OrgRole;
+}
+
+export interface Organization {
+  id: number;
+  name: string;
+  is_personal: boolean;
+  created_at: string;
+}
+
+export interface OrganizationCreate {
+  name: string;
+}
+
+export interface OrgMember {
+  user_id: number;
+  email: string;
+  full_name?: string | null;
+  role: OrgRole;
+  created_at: string;
+}
+
+export interface OrgInvite {
+  id: number;
+  organization_id: number;
+  email: string;
+  role: OrgRole;
+  status: "pending" | "accepted" | "revoked";
+  token: string;
+  created_at: string;
+  expires_at?: string | null;
+}
+
+export interface InviteCreate {
+  email: string;
+  // Only "admin" | "member" are assignable; "owner" is set at creation.
+  role?: "admin" | "member";
 }
 
 export interface LoginPayload {
@@ -32,7 +83,10 @@ export interface Project {
   name: string;
   domain: string;
   description?: string | null;
-  owner_id: number;
+  // Projects now belong to an organization (tenant). owner_id is the creator
+  // and may be null if that user was removed from the org.
+  organization_id: number;
+  owner_id?: number | null;
   created_at: string;
 }
 

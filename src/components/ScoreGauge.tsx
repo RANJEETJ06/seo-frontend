@@ -7,7 +7,7 @@ interface ScoreGaugeProps {
 function colorFor(score: number) {
   if (score >= 80) return "text-signal stroke-signal";
   if (score >= 60) return "text-warn stroke-warn";
-  if (score >= 40) return "text-[#fb923c] stroke-[#fb923c]";
+  if (score >= 40) return "text-[#d97706] stroke-[#d97706]";
   return "text-danger stroke-danger";
 }
 
@@ -31,7 +31,7 @@ const ScoreGauge = ({ score, label, size = "md" }: ScoreGaugeProps) => {
             cy={dim / 2}
             r={radius}
             strokeWidth={stroke}
-            className="stroke-white/[0.07]"
+            className="stroke-[rgba(1,48,43,0.08)]"
             fill="none"
           />
           <circle

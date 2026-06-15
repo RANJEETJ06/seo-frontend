@@ -19,6 +19,8 @@ export default {
           DEFAULT: "var(--signal)",
           press: "var(--signal-press)",
           soft: "var(--signal-soft)",
+          bright: "var(--signal-bright)",
+          ink: "var(--signal-ink)",
         },
         success: "var(--success)",
         warn: "var(--warn)",
@@ -27,8 +29,8 @@ export default {
       },
       fontFamily: {
         sans: ['"Hanken Grotesque"', "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ['"Bricolage Grotesque"', '"Hanken Grotesque"', "sans-serif"],
-        mono: ['"JetBrains Mono"', "ui-monospace", "SFMono-Regular", "monospace"],
+        display: ['"Familjen Grotesk"', '"Hanken Grotesque"', "sans-serif"],
+        mono: ['"Familjen Grotesk"', "ui-sans-serif", "system-ui", "sans-serif"],
       },
       borderColor: {
         DEFAULT: "var(--line)",
@@ -37,17 +39,18 @@ export default {
         tightest: "-0.03em",
       },
       boxShadow: {
+        /* Soft, diffuse light-theme elevation. */
         panel:
-          "inset 0 1px 0 0 rgba(255,255,255,0.04), 0 14px 40px -22px rgba(0,0,0,0.85)",
-        lift: "0 24px 60px -28px rgba(0,0,0,0.9)",
-        glow: "0 0 0 1px var(--signal), 0 0 28px -4px var(--signal-glow)",
-        "glow-soft": "0 0 24px -6px var(--signal-glow)",
+          "0 1px 2px rgba(0,30,43,0.04), 0 12px 32px -18px rgba(0,30,43,0.16)",
+        lift: "0 30px 64px -30px rgba(0,30,43,0.24)",
+        glow: "0 0 0 1px var(--signal-bright), 0 10px 30px -8px var(--signal-glow)",
+        "glow-soft": "0 8px 26px -10px var(--signal-glow)",
       },
       backgroundImage: {
         "signal-grad":
-          "linear-gradient(135deg, var(--signal) 0%, #8fdc2e 100%)",
+          "linear-gradient(135deg, #00ed64 0%, #00684a 100%)",
         "panel-sheen":
-          "linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0) 40%)",
+          "linear-gradient(180deg, rgba(0,104,74,0.018), rgba(0,0,0,0) 42%)",
       },
       keyframes: {
         "fade-up": {
@@ -58,9 +61,9 @@ export default {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
-        sheen: {
-          "0%": { transform: "translateX(-120%)" },
-          "100%": { transform: "translateX(220%)" },
+        float: {
+          "0%,100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
         },
         "pulse-ring": {
           "0%": { boxShadow: "0 0 0 0 var(--signal-glow)" },
@@ -75,7 +78,7 @@ export default {
       animation: {
         "fade-up": "fade-up 0.5s cubic-bezier(0.2,0.7,0.2,1) both",
         "fade-in": "fade-in 0.6s ease both",
-        sheen: "sheen 1.1s cubic-bezier(0.2,0.7,0.2,1)",
+        float: "float 6s ease-in-out infinite",
         "pulse-ring": "pulse-ring 2s cubic-bezier(0.4,0,0.6,1) infinite",
         blink: "blink 1.4s steps(2, start) infinite",
       },

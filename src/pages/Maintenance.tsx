@@ -70,7 +70,7 @@ const Maintenance = ({ retrying = false, onRetry }: MaintenanceProps) => {
               type="button"
               onClick={onRetry}
               disabled={retrying}
-              className="mt-6 w-full text-white"
+              className="mt-6 w-full"
             >
               {retrying ? "Checking…" : "Retry now"}
             </Button>

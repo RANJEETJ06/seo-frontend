@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/auth";
+import OrgSwitcher from "./OrgSwitcher";
 
 /* Hand-drawn line icons — 18px, 1.6 stroke, currentColor. */
 const I = ({ children }: { children: ReactNode }) => (
@@ -20,18 +21,12 @@ const I = ({ children }: { children: ReactNode }) => (
 );
 
 const icons: Record<string, ReactNode> = {
-  "/": (
+  "/dashboard": (
     <I>
       <rect x="3" y="3" width="7" height="7" rx="1.5" />
       <rect x="14" y="3" width="7" height="7" rx="1.5" />
       <rect x="14" y="14" width="7" height="7" rx="1.5" />
       <rect x="3" y="14" width="7" height="7" rx="1.5" />
-    </I>
-  ),
-  "/learn": (
-    <I>
-      <path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9l4.6-1.4z" />
-      <path d="M18.5 15.5l.8 1.8 1.7.7-1.7.7-.8 1.8-.8-1.8-1.7-.7 1.7-.7z" />
     </I>
   ),
   "/analyze": (
@@ -94,8 +89,7 @@ const icons: Record<string, ReactNode> = {
 };
 
 const navItems = [
-  { to: "/", label: "Dashboard" },
-  { to: "/learn", label: "Learn" },
+  { to: "/dashboard", label: "Dashboard" },
   { to: "/analyze", label: "Analyze" },
   { to: "/tech-audit", label: "Tech Audit" },
   { to: "/ai-visibility", label: "AI Visibility" },
@@ -131,7 +125,7 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
       {/* Backdrop (mobile only) */}
       <div
         onClick={onClose}
-        className={`fixed inset-0 z-30 bg-black/60 backdrop-blur-sm transition-opacity lg:hidden ${
+        className={`fixed inset-0 z-30 bg-ink/30 backdrop-blur-sm transition-opacity lg:hidden ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         aria-hidden="true"
@@ -144,36 +138,30 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
         {/* Brand */}
         <div className="flex items-center justify-between px-5 pb-5 pt-6">
           <div className="flex items-center gap-3">
-            <div className="relative grid h-9 w-9 place-items-center rounded-lg bg-signal-grad shadow-glow-soft">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 32 32"
-                fill="none"
-                aria-hidden="true"
-              >
+            <div className="relative grid h-9 w-9 place-items-center rounded-xl bg-signal-grad shadow-glow-soft">
+              <svg width="18" height="18" viewBox="0 0 32 32" fill="none" aria-hidden="true">
                 <path
                   d="M6 21 L13 13 L18 17 L25 8"
-                  stroke="#0a0b0d"
-                  strokeWidth="2.6"
+                  stroke="#00150f"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-                <circle cx="25" cy="8" r="2.4" fill="#0a0b0d" />
+                <circle cx="25" cy="8" r="2.6" fill="#00150f" />
               </svg>
             </div>
             <div className="leading-tight">
-              <div className="font-display text-[0.95rem] font-bold tracking-tight text-ink">
-                AI&nbsp;SEO
+              <div className="font-display text-[1rem] font-bold tracking-tight text-ink">
+                Lumen
               </div>
-              <div className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-ink-faint">
-                signal console
+              <div className="text-[0.62rem] font-medium uppercase tracking-[0.18em] text-ink-faint">
+                SEO · AEO · GEO
               </div>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="rounded-md p-1.5 text-ink-faint hover:bg-white/5 hover:text-ink lg:hidden"
+            className="rounded-lg p-1.5 text-ink-faint hover:bg-panel-2 hover:text-ink lg:hidden"
             aria-label="Close menu"
           >
             <I>
@@ -184,8 +172,9 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
 
         <div className="mx-5 mb-3 h-px bg-line" />
 
-        <div className="px-5 pb-2">
-          <span className="eyebrow">Navigation</span>
+        {/* Active organization (tenant) switcher */}
+        <div className="pb-3">
+          <OrgSwitcher />
         </div>
 
         {/* Nav */}
@@ -194,21 +183,20 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
             <NavLink
               key={item.to}
               to={item.to}
-              end={item.to === "/"}
               onClick={onClose}
-              style={{ animationDelay: `${i * 35}ms` }}
+              style={{ animationDelay: `${i * 30}ms` }}
               className={({ isActive }) =>
-                `group relative mb-0.5 flex animate-fade-up items-center gap-3 rounded-lg px-3 py-2 text-[0.85rem] transition-colors ${
+                `group relative mb-0.5 flex animate-fade-up items-center gap-3 rounded-xl px-3 py-2 text-[0.85rem] transition-colors ${
                   isActive
                     ? "bg-signal-soft text-signal"
-                    : "text-ink-dim hover:bg-white/[0.04] hover:text-ink"
+                    : "text-ink-dim hover:bg-panel-2 hover:text-ink"
                 }`
               }
             >
               {({ isActive }) => (
                 <>
                   <span
-                    className={`absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-signal transition-all duration-200 ${
+                    className={`absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-signal-bright transition-all duration-200 ${
                       isActive ? "opacity-100" : "opacity-0 group-hover:opacity-40"
                     }`}
                     aria-hidden="true"
@@ -227,22 +215,22 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
 
         {/* User footer */}
         <div className="border-t border-line p-4">
-          <div className="flex items-center gap-3 rounded-lg border border-line bg-white/[0.02] p-2.5">
-            <div className="grid h-9 w-9 shrink-0 place-items-center rounded-md border border-line-2 bg-panel-2 font-display text-sm font-bold text-signal">
+          <div className="flex items-center gap-3 rounded-xl border border-line bg-panel-2 p-2.5">
+            <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-line-2 bg-white font-display text-sm font-bold text-signal">
               {initial}
             </div>
             <div className="min-w-0 flex-1">
               <div className="truncate text-[0.8rem] font-medium text-ink">
                 {user?.full_name || user?.email}
               </div>
-              <div className="truncate font-mono text-[0.65rem] text-ink-faint">
+              <div className="truncate text-[0.68rem] text-ink-faint">
                 {user?.email}
               </div>
             </div>
             <button
               onClick={handleLogout}
               title="Sign out"
-              className="ring-signal rounded-md p-2 text-ink-faint transition-colors hover:bg-white/5 hover:text-danger"
+              className="ring-signal rounded-lg p-2 text-ink-faint transition-colors hover:bg-white hover:text-danger"
               aria-label="Sign out"
             >
               <I>

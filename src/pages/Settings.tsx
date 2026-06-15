@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { useAuthStore } from "../store/auth";
 import Card from "../components/Card";
 import { Badge } from "../components/Field";
+import OrganizationPanel from "../components/org/OrganizationPanel";
 import EmailAccountsPanel from "../components/outreach/EmailAccountsPanel";
 
 const Settings = () => {
@@ -45,6 +46,8 @@ const Settings = () => {
           <Row label="User ID" value={`#${user.id}`} />
         </dl>
       </Card>
+
+      <OrganizationPanel />
 
       <EmailAccountsPanel />
     </div>

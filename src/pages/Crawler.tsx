@@ -33,7 +33,7 @@ const Crawler = () => {
             className={`rounded px-4 py-1.5 text-xs font-medium transition ${
               tab === t.id
                 ? "bg-signal text-[#353941]"
-                : "text-ink-dim hover:bg-white/[0.06]"
+                : "text-ink-dim hover:bg-panel-2"
             }`}
           >
             {t.label}
@@ -254,7 +254,7 @@ const SitemapPanel = () => {
             {result.urls.map((u, i) => (
               <li
                 key={i}
-                className="truncate rounded px-2 py-1 text-ink-dim hover:bg-white/[0.04]"
+                className="truncate rounded px-2 py-1 text-ink-dim hover:bg-panel-2"
               >
                 <a
                   href={u}

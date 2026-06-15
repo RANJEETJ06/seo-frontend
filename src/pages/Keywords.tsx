@@ -38,7 +38,7 @@ const Keywords = () => {
             className={`rounded px-4 py-1.5 text-xs font-medium transition ${
               tab === t.id
                 ? "bg-signal text-[#353940]"
-                : "text-ink-dim hover:bg-white/[0.06]"
+                : "text-ink-dim hover:bg-panel-2"
             }`}
           >
             {t.label}
@@ -115,7 +115,7 @@ const ExtractPanel = () => {
               className={`rounded px-3 py-1 text-xs font-medium transition ${
                 mode === m
                   ? "bg-signal text-[#272a2f]"
-                  : "text-ink-dim hover:bg-white/[0.06]"
+                  : "text-ink-dim hover:bg-panel-2"
               }`}
             >
               {m === "url" ? "From URL" : "From text"}
