@@ -54,6 +54,19 @@ const icons: Record<string, ReactNode> = {
       <path d="M9 4 7 20M17 4l-2 16M5 9h15M4 15h15" />
     </I>
   ),
+  "/search-console": (
+    <I>
+      <circle cx="11" cy="11" r="7" />
+      <path d="m20 20-3.2-3.2" />
+      <path d="M8.5 11h5M11 8.5v5" />
+    </I>
+  ),
+  "/analytics": (
+    <I>
+      <path d="M4 19V5M4 19h16" />
+      <path d="M8 16v-4M12 16V8M16 16v-6" />
+    </I>
+  ),
   "/reports": (
     <I>
       <path d="M12 3 3 7.5 12 12l9-4.5L12 3Z" />
@@ -94,6 +107,8 @@ const navItems = [
   { to: "/tech-audit", label: "Tech Audit" },
   { to: "/ai-visibility", label: "AI Visibility" },
   { to: "/keywords", label: "Keywords" },
+  { to: "/search-console", label: "Search Console" },
+  { to: "/analytics", label: "Google Analytics" },
   { to: "/reports", label: "Reports" },
   { to: "/crawler", label: "Crawler" },
   { to: "/competitor", label: "Competitor" },

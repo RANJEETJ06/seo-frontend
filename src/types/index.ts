@@ -632,6 +632,120 @@ export interface GoogleOAuthCallbackPayload {
   redirect_uri: string;
 }
 
+// ----- Google Search Console -------------------------------------------------
+
+export interface GSCConnection {
+  id: number;
+  account_email: string;
+  display_name?: string | null;
+  is_active: boolean;
+  last_error?: string | null;
+  last_synced_at?: string | null;
+  created_at: string;
+}
+
+export interface GSCSite {
+  site_url: string;
+  permission_level?: string | null;
+}
+
+export interface GSCSitesResponse {
+  connection_id: number;
+  sites: GSCSite[];
+}
+
+export interface GSCPerformanceRequest {
+  connection_id: number;
+  site_url: string;
+  days?: number;
+  dimension?: string;
+  row_limit?: number;
+}
+
+export interface GSCQueryRow {
+  key: string;
+  clicks: number;
+  impressions: number;
+  ctr: number;
+  position: number;
+}
+
+export interface GSCPerformanceResponse {
+  site_url: string;
+  dimension: string;
+  start_date: string;
+  end_date: string;
+  rows: GSCQueryRow[];
+  total_clicks: number;
+  total_impressions: number;
+}
+
+export interface GSCImportRequest {
+  project_id: number;
+  connection_id: number;
+  site_url: string;
+  days?: number;
+  min_impressions?: number;
+  limit?: number;
+}
+
+export interface GSCImportResponse {
+  project_id: number;
+  imported: number;
+  updated: number;
+  skipped: number;
+}
+
+// ----- Google Analytics 4 ----------------------------------------------------
+
+export interface GAConnection {
+  id: number;
+  account_email: string;
+  display_name?: string | null;
+  is_active: boolean;
+  last_error?: string | null;
+  last_synced_at?: string | null;
+  created_at: string;
+}
+
+export interface GAProperty {
+  property: string;
+  display_name?: string | null;
+  account_name?: string | null;
+}
+
+export interface GAPropertiesResponse {
+  connection_id: number;
+  properties: GAProperty[];
+}
+
+export interface GAReportRequest {
+  connection_id: number;
+  property: string;
+  days?: number;
+  dimension?: string;
+  limit?: number;
+}
+
+export interface GAReportRow {
+  dimension: string;
+  sessions: number;
+  total_users: number;
+  screen_page_views: number;
+  engagement_rate: number;
+}
+
+export interface GAReportResponse {
+  property: string;
+  dimension: string;
+  start_date: string;
+  end_date: string;
+  rows: GAReportRow[];
+  total_sessions: number;
+  total_users: number;
+  total_screen_page_views: number;
+}
+
 export interface EmailTemplate {
   id: number;
   name: string;

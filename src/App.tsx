@@ -17,7 +17,11 @@ import TechAudit from "./pages/TechAudit";
 import AIVisibility from "./pages/AIVisibility";
 import Settings from "./pages/Settings";
 import Onboarding from "./pages/Onboarding";
+import SearchConsole from "./pages/SearchConsole";
+import Analytics from "./pages/Analytics";
 import OAuthGoogleCallback from "./pages/OAuthGoogleCallback";
+import OAuthSearchConsoleCallback from "./pages/OAuthSearchConsoleCallback";
+import OAuthAnalyticsCallback from "./pages/OAuthAnalyticsCallback";
 
 function App() {
   const loadCurrentUser = useAuthStore((s) => s.loadCurrentUser);
@@ -34,6 +38,14 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/oauth/google/callback" element={<OAuthGoogleCallback />} />
+          <Route
+            path="/oauth/google/search-console/callback"
+            element={<OAuthSearchConsoleCallback />}
+          />
+          <Route
+            path="/oauth/google/analytics/callback"
+            element={<OAuthAnalyticsCallback />}
+          />
 
           {/* App (auth-gated) */}
           <Route element={<ProtectedRoute />}>
@@ -43,6 +55,8 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/analyze" element={<AnalyzeWebsite />} />
               <Route path="/keywords" element={<Keywords />} />
+              <Route path="/search-console" element={<SearchConsole />} />
+              <Route path="/analytics" element={<Analytics />} />
               <Route path="/reports" element={<Reports />} />
               <Route path="/crawler" element={<Crawler />} />
               <Route path="/competitor" element={<Competitor />} />
