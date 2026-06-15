@@ -11,15 +11,15 @@ export const apiClient = axios.create({
   timeout: 60000,
 });
 
-// The health endpoint lives at the server root (e.g. http://localhost:8000/health),
-// not under the /api/v1 prefix — derive it from the API base's origin.
-export const healthUrl = (() => {
-  try {
-    return `${new URL(baseURL).origin}/health`;
-  } catch {
-    return "http://localhost:8000/health";
-  }
-})();
+// Probe health under the SAME base as every other API call (the backend serves
+// it at `${API_V1_PREFIX}/health`). This is deliberate: in prod the API is
+// usually behind an ingress that only routes `/api/v1/*` to the backend, so a
+// root-level `/health` probe would hit the static/SPA host instead and the app
+// would be stuck on the maintenance screen. Tying health to the API base means
+// "if the API is reachable, health is reachable" — and it works with a relative
+// base URL (e.g. "/api/v1") for same-origin deploys, where building a URL from
+// the origin would otherwise break.
+export const healthUrl = `${baseURL.replace(/\/+$/, "")}/health`;
 
 /**
  * Probe the backend's /health endpoint. Resolves true when the server is
