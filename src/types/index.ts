@@ -731,8 +731,12 @@ export interface GAReportRow {
   dimension: string;
   sessions: number;
   total_users: number;
+  new_users: number;
   screen_page_views: number;
   engagement_rate: number;
+  avg_session_duration: number;
+  bounce_rate: number;
+  conversions: number;
 }
 
 export interface GAReportResponse {
@@ -743,7 +747,12 @@ export interface GAReportResponse {
   rows: GAReportRow[];
   total_sessions: number;
   total_users: number;
+  total_new_users: number;
   total_screen_page_views: number;
+  total_conversions: number;
+  engagement_rate: number;
+  avg_session_duration: number;
+  bounce_rate: number;
 }
 
 export interface EmailTemplate {
