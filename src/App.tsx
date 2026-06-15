@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import AnalyzeWebsite from "./pages/AnalyzeWebsite";
 import Keywords from "./pages/Keywords";
+import RankTracking from "./pages/RankTracking";
 import Reports from "./pages/Reports";
 import Crawler from "./pages/Crawler";
 import Competitor from "./pages/Competitor";
@@ -55,6 +56,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/analyze" element={<AnalyzeWebsite />} />
               <Route path="/keywords" element={<Keywords />} />
+              <Route path="/rank-tracking" element={<RankTracking />} />
               <Route path="/search-console" element={<SearchConsole />} />
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/reports" element={<Reports />} />

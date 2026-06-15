@@ -895,3 +895,137 @@ export interface BulkOutreachSendRequest {
   template_id?: number;
   track_opens?: boolean;
 }
+
+// ---------------------------------------------------------------------------
+// Rank tracking
+// ---------------------------------------------------------------------------
+
+export interface RankTarget {
+  id: number;
+  project_id: number;
+  gsc_connection_id: number;
+  site_url: string;
+  is_active: boolean;
+  last_captured_on?: string | null;
+  created_at: string;
+}
+
+export interface RankTargetCreate {
+  project_id: number;
+  connection_id: number;
+  site_url: string;
+}
+
+export interface CaptureResponse {
+  captured: number;
+  captured_on?: string | null;
+}
+
+export interface RankHistoryPoint {
+  date: string;
+  position: number;
+}
+
+export type RankStatus = "new" | "improved" | "stable" | "declined";
+
+export interface RankSummaryItem {
+  query: string;
+  current_position: number;
+  previous_position?: number | null;
+  change?: number | null; // + = improved (gained positions)
+  clicks: number;
+  impressions: number;
+  ctr: number;
+  captured_on: string;
+  status: RankStatus;
+  alert: boolean;
+  reasons: string[];
+  history: RankHistoryPoint[];
+}
+
+export interface RankSummaryResponse {
+  project_id: number;
+  items: RankSummaryItem[];
+  trend: RankHistoryPoint[];
+}
+
+// ---------------------------------------------------------------------------
+// White-label reports
+// ---------------------------------------------------------------------------
+
+export interface ReportBranding {
+  company_name?: string;
+  accent_color?: string;
+  logo_url?: string;
+  footer_note?: string;
+}
+
+export interface ReportGenerateRequest {
+  project_id: number;
+  title?: string;
+  branding?: ReportBranding;
+}
+
+export interface GeneratedReportListItem {
+  id: number;
+  project_id: number;
+  title: string;
+  created_at: string;
+}
+
+export interface GeneratedReportList {
+  project_id: number;
+  items: GeneratedReportListItem[];
+}
+
+export interface ReportRankItem {
+  query: string;
+  current_position: number;
+  change?: number | null;
+  impressions: number;
+  status: RankStatus;
+  reasons: string[];
+}
+
+export interface GeneratedReport {
+  id: number;
+  project_id: number;
+  title: string;
+  branding?: ReportBranding | null;
+  created_at: string;
+  // Stored payload (see report_builder.build):
+  payload: {
+    project: { id: number; name: string; domain: string };
+    generated_at: string;
+    branding: ReportBranding;
+    audit: {
+      url: string;
+      overall_score: number;
+      title_score: number;
+      meta_score: number;
+      heading_score: number;
+      content_score: number;
+      technical_score: number;
+      issues: string[];
+      recommendations: string[];
+      ai_summary?: string | null;
+    } | null;
+    keywords: {
+      term: string;
+      frequency: number;
+      density: number;
+      relevance_score: number;
+      source: string;
+    }[];
+    rank: {
+      tracked: ReportRankItem[];
+      declines: { query: string; reasons: string[] }[];
+      trend: RankHistoryPoint[];
+    };
+    summary_counts: {
+      keywords: number;
+      tracked_queries: number;
+      declines: number;
+    };
+  };
+}

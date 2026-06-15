@@ -9,3 +9,5 @@ export { crawlerApi } from "./crawler";
 export { outreachApi } from "./outreach";
 export { searchConsoleApi } from "./searchConsole";
 export { analyticsApi } from "./analytics";
+export { rankTrackingApi } from "./rankTracking";
+export { reportsApi } from "./reports";
