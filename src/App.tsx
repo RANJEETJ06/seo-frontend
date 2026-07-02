@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { useAuthStore } from "./store/auth";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import HealthGate from "./components/HealthGate";
@@ -32,11 +32,16 @@ function App() {
   }, [loadCurrentUser]);
 
   return (
-    <HealthGate>
-      <BrowserRouter>
-        <Routes>
-          {/* Public */}
-          <Route path="/" element={<Landing />} />
+    <BrowserRouter>
+      <Routes>
+        {/* Public landing — the front door. Intentionally NOT health-gated so
+            it always loads, even while the backend is offline. */}
+        <Route path="/" element={<Landing />} />
+
+        {/* Auth + app — health-gated. Reaching sign in / sign up or any app
+            route while the backend is unreachable shows the maintenance page,
+            and reconnects automatically once the service is back. */}
+        <Route element={<HealthGate><Outlet /></HealthGate>}>
           <Route path="/login" element={<Login />} />
           <Route path="/oauth/google/callback" element={<OAuthGoogleCallback />} />
           <Route
@@ -68,11 +73,11 @@ function App() {
               <Route path="/settings" element={<Settings />} />
             </Route>
           </Route>
+        </Route>
 
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </HealthGate>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
